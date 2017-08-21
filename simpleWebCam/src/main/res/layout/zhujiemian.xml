@@ -530,7 +530,7 @@
         android:layout_height="0dp">
 
         <Button
-            android:text="完 成"
+            android:text="保 存"
             android:textSize="16sp"
             android:id="@+id/wancheng"
             android:layout_marginRight="20dp"

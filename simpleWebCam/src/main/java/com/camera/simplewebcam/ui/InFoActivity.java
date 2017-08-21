@@ -1191,8 +1191,8 @@ public class InFoActivity extends Activity implements OnClientCallback {
                                 int yy2 = 0;
                                 int ww = bitmapBig.getWidth();
                                 int hh = bitmapBig.getHeight();
-                                if (face.getRight() - 230 >= 0) {
-                                    xx = face.getRight() - 230;
+                                if (face.getRight() - 260 >= 0) {
+                                    xx = face.getRight() - 260;
                                 } else {
                                     xx = 0;
                                 }
@@ -1201,13 +1201,13 @@ public class InFoActivity extends Activity implements OnClientCallback {
                                 } else {
                                     yy = 0;
                                 }
-                                if (xx + 300 <= ww) {
-                                    xx2 = 300;
+                                if (xx + 320 <= ww) {
+                                    xx2 = 320;
                                 } else {
                                     xx2 = ww - xx-1;
                                 }
-                                if (yy + 330 <= hh) {
-                                    yy2 =  330;
+                                if (yy + 400 <= hh) {
+                                    yy2 =  400;
                                 } else {
                                     yy2 = hh - yy-1;
                                 }
