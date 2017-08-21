@@ -1090,6 +1090,7 @@ public class InFoActivity extends Activity implements OnClientCallback {
                 Log.d("AllConnects", "请求识别失败"+e.getMessage());
                 if (tiJIaoDialog!=null){
                     tiJIaoDialog.dismiss();
+                    tiJIaoDialog=null;
                 }
             }
 
@@ -1097,15 +1098,16 @@ public class InFoActivity extends Activity implements OnClientCallback {
             public void onResponse(Call call, Response response) throws IOException {
                 if (tiJIaoDialog!=null){
                     tiJIaoDialog.dismiss();
+                    tiJIaoDialog=null;
                 }
                 Log.d("AllConnects", "请求识别成功"+call.request().toString());
                 //获得返回体
                 try {
 
                     ResponseBody body = response.body();
-                    String ss=body.string();
-                    Log.d("InFoActivity", "ss.contains():" + ss.contains("1"));
-                    if (ss.contains("1")){
+                    String ss=body.string().trim();
+                    Log.d("InFoActivity", "ss:" + ss);
+                    if (ss.equals("1")){
 
                         runOnUiThread(new Runnable() {
                             @Override
@@ -1119,9 +1121,21 @@ public class InFoActivity extends Activity implements OnClientCallback {
                         });
 
                         finish();
-                    }else {
+                    }else if (ss.equals("这个是黑名单")){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
 
-                        Log.d("InFoActivity", "dddddd321321");
+                                Toast tastyToast= TastyToast.makeText(InFoActivity.this,"请注意,这个是黑名单",TastyToast.LENGTH_LONG,TastyToast.ERROR);
+                                tastyToast.setGravity(Gravity.CENTER,0,0);
+                                tastyToast.show();
+
+                            }
+                        });
+                        finish();
+
+
+                    }else {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -1133,15 +1147,15 @@ public class InFoActivity extends Activity implements OnClientCallback {
                             }
                         });
                         finish();
-
                     }
 
                 }catch (Exception e){
 
                     if (tiJIaoDialog!=null){
                         tiJIaoDialog.dismiss();
+                        tiJIaoDialog=null;
                     }
-                    Log.d("WebsocketPushMsg", e.getMessage());
+                    Log.d("WebsocketPushMsg", "ss3"+e.getMessage());
                 }
             }
         });
@@ -1426,7 +1440,7 @@ public class InFoActivity extends Activity implements OnClientCallback {
                             tishi.setText("上传图片出错，请返回后重试！");
                         }
                     });
-                    Log.d("WebsocketPushMsg", e.getMessage());
+                    Log.d("WebsocketPushMsg","ss2"+e.getMessage());
                     isTrue4=false;
                     isTrue3=false;
                 }
@@ -1517,7 +1531,7 @@ public class InFoActivity extends Activity implements OnClientCallback {
                             tishi.setText("上传图片出错，请返回后重试！");
                         }
                     });
-                    Log.d("WebsocketPushMsg", e.getMessage());
+                    Log.d("WebsocketPushMsg", "ss1"+e.getMessage());
                 }
             }
         });
@@ -1638,7 +1652,7 @@ public class InFoActivity extends Activity implements OnClientCallback {
 
                     }
 
-                    Log.d("WebsocketPushMsg", e.getMessage());
+                    Log.d("WebsocketPushMsg", "ss4"+e.getMessage());
                 }
             }
         });

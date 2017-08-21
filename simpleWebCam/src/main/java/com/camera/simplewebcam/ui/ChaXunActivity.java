@@ -2,17 +2,23 @@ package com.camera.simplewebcam.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.anupcowkur.reservoir.Reservoir;
+import com.anupcowkur.reservoir.ReservoirGetCallback;
 import com.camera.simplewebcam.R;
 import com.camera.simplewebcam.view.X5WebView;
+import com.google.gson.reflect.TypeToken;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
@@ -26,6 +32,7 @@ public class ChaXunActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cha_xun);
         webView= (X5WebView) findViewById(R.id.webwiew);
+
 
         title= (TextView) findViewById(R.id.title);
         title.setText("比对记录");
@@ -73,18 +80,42 @@ public class ChaXunActivity extends Activity {
 
             }
         });
-        String str ="系统管理员"; //默认环境，已是UTF-8编码
-        try {
-            String strGBK = URLEncoder.encode(str,"UTF-8");
-            System.out.println(strGBK);
+
+
+
         //    http://192.168.2.101:8081/Police/ipad.html?accountName=%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E5%91%98
 //            String strUTF8 = URLDecoder.decode(str, "UTF-8");
 //            System.out.println(strUTF8);
-            webView.loadUrl("http://192.168.2.101:8081/Police/ipad.html?accountName="+strGBK);
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+            Type resultType2 = new TypeToken<String>() {
+            }.getType();
+            Reservoir.getAsync("zhuji", resultType2, new ReservoirGetCallback<String>() {
+                @Override
+                public void onSuccess(final String i) {
+                    String str ="系统管理员"; //默认环境，已是UTF-8编码
+                    String strGBK = null;
+                    try {
+                        strGBK = URLEncoder.encode(str,"UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+
+                    }
+                    System.out.println(strGBK);
+                    webView.loadUrl(i+"/Police/ipad.html?accountName="+strGBK);
+                }
+
+                @Override
+                public void onFailure(final Exception e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            TastyToast.makeText(ChaXunActivity.this,e.getMessage(),TastyToast.LENGTH_LONG,TastyToast.INFO).show();
+                        }
+                    });
+
+                }
+
+            });
 
 
     }
