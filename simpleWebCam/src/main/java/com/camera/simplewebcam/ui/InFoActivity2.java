@@ -172,7 +172,7 @@ public class InFoActivity2 extends Activity {
                     case 22:
 
                         tishi.setVisibility(View.VISIBLE);
-                        tishi.setText("比对失败,开始第"+count+"次比对");
+                        tishi.setText("比对失败,开始第"+count+"次比对,请再次看下摄像头");
 
                         break;
 

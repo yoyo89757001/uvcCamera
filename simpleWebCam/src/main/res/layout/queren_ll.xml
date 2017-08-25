@@ -47,7 +47,7 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:id="@+id/a5"
-            android:background="@color/lanse33"
+            android:background="@drawable/jiaohu"
             android:text="知道了"
             android:gravity="center"
             android:layout_centerHorizontal="true"
