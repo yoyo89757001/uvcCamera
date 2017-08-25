@@ -32,15 +32,16 @@ import com.camera.simplewebcam.beans.Photos;
 import com.camera.simplewebcam.beans.ShiBieBean;
 import com.camera.simplewebcam.beans.UserInfoBena;
 import com.camera.simplewebcam.dialog.JiaZaiDialog;
+import com.camera.simplewebcam.dialog.QueRenDialog;
 import com.camera.simplewebcam.dialog.TiJIaoDialog;
 import com.camera.simplewebcam.kaer.BeepManager;
 import com.camera.simplewebcam.utils.AppendAPI;
 import com.camera.simplewebcam.utils.FileUtil;
 import com.camera.simplewebcam.utils.GsonUtil;
 import com.camera.simplewebcam.utils.LibVLCUtil;
-import com.camera.simplewebcam.utils.Utils;
+
 import com.camera.simplewebcam.view.AutoFitTextureView;
-import com.camera.simplewebcam.view.HorizontalProgressBarWithNumber;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -48,7 +49,7 @@ import com.google.gson.reflect.TypeToken;
 import com.kaeridcard.tools.Tool;
 import com.lzw.qlhs.Wlt2bmp;
 import com.sdsmdg.tastytoast.TastyToast;
-import com.squareup.leakcanary.RefWatcher;
+
 import com.tzutalin.dlib.FaceDet;
 import com.tzutalin.dlib.VisionDetRet;
 
@@ -87,15 +88,15 @@ public class InFoActivity2 extends Activity {
     private Button button;
    // private HorizontalProgressBarWithNumber progressBarWithNumber;
     private BeepManager _beepManager;
-   // public static final String HOST="http://192.168.0.104:8080";
+   // public static final String zhuji="http://192.168.0.104:8080";
     private JiaZaiDialog jiaZaiDialog=null;
     private String xiangsi="";
     private String biduijieguo="";
     private TiJIaoDialog tiJIaoDialog=null;
     private Button quxiao;
-    public static final String HOST="http://192.168.2.101:8081";
-   // public static final String HOST="http://174p2704z3.51mypc.cn:11100";
-  //  public static final String HOST="http://192.168.2.43:8080";
+  //  public static final String zhuji="http://192.168.2.101:8081";
+   // public static final String zhuji="http://174p2704z3.51mypc.cn:11100";
+  //  public static final String zhuji="http://192.168.2.43:8080";
     private MediaPlayer mediaPlayer=null;
     private IVLCVout vlcVout=null;
     private IVLCVout.Callback callback;
@@ -140,6 +141,7 @@ public class InFoActivity2 extends Activity {
     private int iInit;
     private byte[] cardinfo = new byte[256 * 8 + 1024];
     private FaceDet mFaceDet;
+    private  String zhuji=null;
 
 
 
@@ -186,6 +188,33 @@ public class InFoActivity2 extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.zhujiemian2);
+
+        Type resultType2 = new TypeToken<String>() {
+        }.getType();
+        Reservoir.getAsync("zhuji", resultType2, new ReservoirGetCallback<String>() {
+            @Override
+            public void onSuccess(final String i) {
+                zhuji=i;
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.d("InFoActivity", "获取本地异常ip:"+e.getMessage());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast tastyToast= TastyToast.makeText(InFoActivity2.this,"请先设置主机地址",TastyToast.LENGTH_LONG,TastyToast.ERROR);
+                        tastyToast.setGravity(Gravity.CENTER,0,0);
+                        tastyToast.show();
+
+                    }
+                });
+
+
+            }
+
+        });
 
         mFaceDet= MyAppLaction.mFaceDet;
         isTrue3=true;
@@ -249,7 +278,10 @@ public class InFoActivity2 extends Activity {
                                 String strTmp3 = strTmp.substring(0, 1);
                                 int i1 = Integer.parseInt(strTmp3);
                                 xingbie.setText(strSex[i1]); // 性别 民簇 出生日期 地址
-                                userInfoBena.setGender(strSex[i1]);
+                                if (strSex[i1].equals("男")){
+                                    userInfoBena.setGender("1");
+                                }else
+                                userInfoBena.setGender("2");
                                 // 民簇
                                 strTmp3 = strTmp.substring(1, 3);
                                 i1 = Integer.parseInt(strTmp3);
@@ -268,9 +300,10 @@ public class InFoActivity2 extends Activity {
 
                                 strTmp = strRfidCardArray[2];
                                 String strTmp6 = strTmp.substring(0, 18);
+                                userInfoBena.setCertNumber(strTmp6);
                                 strTmp6 = strTmp6.substring(0, 2) + "**************" + strTmp6.substring(16, 18);
                                 shenfengzheng.setText(strTmp6);
-                                userInfoBena.setCertNumber(strTmp6);
+
 
                                 String strTmp7 = strTmp.substring(18, strTmp.length());
                                 fazhengjiguan.setText(strTmp7);
@@ -461,8 +494,8 @@ public class InFoActivity2 extends Activity {
 
         userInfoBena=new UserInfoBena();
 
-        ip = Utils.getIp(this);
-        String source = Utils.getPassword(this);
+        //ip = Utils.getIp(this);
+       // String source = Utils.getPassword(this);
 
         ImageView imageView= (ImageView) findViewById(R.id.dd);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -896,8 +929,8 @@ public class InFoActivity2 extends Activity {
         unregisterReceiver(sensorInfoReceiver);
         super.onDestroy();
 
-        RefWatcher refWatcher = MyAppLaction.getRefWatcher(InFoActivity2.this);
-        refWatcher.watch(this);
+//        RefWatcher refWatcher = MyAppLaction.getRefWatcher(InFoActivity2.this);
+//        refWatcher.watch(this);
     }
 
 
@@ -932,11 +965,11 @@ public class InFoActivity2 extends Activity {
                 .add("carNumber",chepaihao.getText().toString().trim())
                 .add("score",xiangsi)
 				.build();
-
+       // Log.d("InFoActivity2", userInfoBena.getGender());
         Request.Builder requestBuilder = new Request.Builder()
                 // .header("Content-Type", "application/json")
                 .post(body)
-                .url(HOST + "/saveCompareResult.do");
+                .url(zhuji + "/saveCompareResult.do");
 
         if (tiJIaoDialog==null){
             tiJIaoDialog=new TiJIaoDialog(InFoActivity2.this);
@@ -966,8 +999,8 @@ public class InFoActivity2 extends Activity {
                 try {
 
                     ResponseBody body = response.body();
-                    String ss=body.string();
-                    Log.d("InFoActivity", "ss.contains():" + ss.contains("1"));
+                    String ss=body.string().trim();
+                    Log.d("InFoActivity", "ss" + ss);
                     if (ss.contains("1")){
 
                         runOnUiThread(new Runnable() {
@@ -982,8 +1015,27 @@ public class InFoActivity2 extends Activity {
                         });
 
                         finish();
-                    }else {
+                    }else  if (ss.equals("这个是黑名单")) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
 
+                                final QueRenDialog dialog=new QueRenDialog(InFoActivity2.this,"请注意,这个是黑名单!");
+                                dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
+                                dialog.setOnPositiveListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                });
+                                dialog.show();
+                            }
+                        });
+
+                    }
+
+                      else {
 
                         runOnUiThread(new Runnable() {
                             @Override
@@ -1107,18 +1159,18 @@ public class InFoActivity2 extends Activity {
                                                        } else {
                                                            xx = 0;
                                                        }
-                                                       if (face.getTop() - 200 >= 0) {
-                                                           yy = face.getTop() - 200;
+                                                       if (face.getTop() - 220 >= 0) {
+                                                           yy = face.getTop() - 220;
                                                        } else {
                                                            yy = 0;
                                                        }
-                                                       if (xx + 350 <= ww) {
-                                                           xx2 = 350;
+                                                       if (xx + 430 <= ww) {
+                                                           xx2 = 430;
                                                        } else {
                                                            xx2 = ww - xx - 1;
                                                        }
-                                                       if (yy + 420 <= hh) {
-                                                           yy2 = 420;
+                                                       if (yy + 430 <= hh) {
+                                                           yy2 = 430;
                                                        } else {
                                                            yy2 = hh - yy - 1;
                                                        }
@@ -1307,7 +1359,7 @@ public class InFoActivity2 extends Activity {
         Request.Builder requestBuilder = new Request.Builder()
                 // .header("Content-Type", "application/json")
                 .post(mBody)
-                .url(HOST + "/AppFileUploadServlet?FilePathPath=cardFilePath&AllowFileType=.jpg,.gif,.jpeg,.bmp,.png&MaxFileSize=10");
+                .url(zhuji + "/AppFileUploadServlet?FilePathPath=cardFilePath&AllowFileType=.jpg,.gif,.jpeg,.bmp,.png&MaxFileSize=10");
 
         // step 3：创建 Call 对象
         Call call = okHttpClient.newCall(requestBuilder.build());
@@ -1392,7 +1444,7 @@ public class InFoActivity2 extends Activity {
         Request.Builder requestBuilder = new Request.Builder()
                 // .header("Content-Type", "application/json")
                 .post(mBody)
-                .url(HOST + "/AppFileUploadServlet?FilePathPath=scanFilePath&AllowFileType=.jpg,.gif,.jpeg,.bmp,.png&MaxFileSize=10");
+                .url(zhuji + "/AppFileUploadServlet?FilePathPath=scanFilePath&AllowFileType=.jpg,.gif,.jpeg,.bmp,.png&MaxFileSize=10");
 
 
         // step 3：创建 Call 对象
@@ -1466,7 +1518,7 @@ public class InFoActivity2 extends Activity {
         Request.Builder requestBuilder = new Request.Builder()
                 // .header("Content-Type", "application/json")
                 .post(body)
-                .url(HOST + "/compare.do");
+                .url(zhuji + "/compare.do");
 
 
         // step 3：创建 Call 对象

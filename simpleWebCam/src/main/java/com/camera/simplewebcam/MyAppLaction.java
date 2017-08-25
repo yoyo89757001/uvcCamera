@@ -6,8 +6,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.anupcowkur.reservoir.Reservoir;
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
+
 import com.tencent.smtt.sdk.QbSdk;
 import com.tzutalin.dlib.Constants;
 import com.tzutalin.dlib.FaceDet;
@@ -30,18 +29,18 @@ public class MyAppLaction extends Application{
 //        System.loadLibrary("opencv_java3");
 //    }
 
-    private RefWatcher refWatcher;
+   // private RefWatcher refWatcher;
 
-    public static RefWatcher getRefWatcher(Context context) {
-        MyAppLaction application = (MyAppLaction) context.getApplicationContext();
-        return application.refWatcher;
-    }
+//    public static RefWatcher getRefWatcher(Context context) {
+//        MyAppLaction application = (MyAppLaction) context.getApplicationContext();
+//        return application.refWatcher;
+////    }
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        refWatcher = LeakCanary.install(this);
+      //  refWatcher = LeakCanary.install(this);
         mFaceDet = new FaceDet(Constants.getFaceShapeModelPath());
 
 

@@ -20,7 +20,7 @@ public class ShouYeActivity extends Activity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ShouYeActivity.this, InFoActivity.class));
+                startActivity(new Intent(ShouYeActivity.this, InFoActivity2.class));
             }
         });
         ImageView imageView2= (ImageView) findViewById(R.id.shezhi);
