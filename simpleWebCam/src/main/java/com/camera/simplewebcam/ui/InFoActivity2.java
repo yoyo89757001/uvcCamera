@@ -386,7 +386,7 @@ public class InFoActivity2 extends Activity {
         registerReceiver(sensorInfoReceiver, intentFilter1);
 
         videoView= (AutoFitTextureView) findViewById(R.id.fff);
-        videoView.setAspectRatio(5,3);
+        videoView.setAspectRatio(2,1);
         imageView= (ImageView) findViewById(R.id.ffff);
 
         jiemian= (LinearLayout) findViewById(R.id.jiemian);
@@ -517,11 +517,7 @@ public class InFoActivity2 extends Activity {
         connectDevice();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-    }
 
     private Handler handlerGongGao = new Handler();
     private Runnable runnableGongGao = new Runnable() {
@@ -566,6 +562,7 @@ public class InFoActivity2 extends Activity {
 
         @Override
         public void run() {
+            Log.d("ReadRfidCardThread", "读卡");
 
                 Arrays.fill(cardinfo, (byte) 32);
                 short[] len = new short[4];
@@ -619,9 +616,7 @@ public class InFoActivity2 extends Activity {
                     strMsg3 = "读取身份证信息成功！";
 
                 }
-
-
-
+            Log.d("ReadRfidCardThread", strMsg3);
 
         }
     }
@@ -830,7 +825,12 @@ public class InFoActivity2 extends Activity {
     }
 
     private void kaishiPaiZhao(){
-
+        if (mediaPlayer==null){
+            finish();
+            Toast tastyToast= TastyToast.makeText(InFoActivity2.this,"开启摄像头失败,请重新读卡",TastyToast.LENGTH_LONG,TastyToast.ERROR);
+            tastyToast.setGravity(Gravity.CENTER,0,0);
+            tastyToast.show();
+        }
         if (mediaPlayer.isPlaying()){
             startThread();
 
@@ -844,7 +844,7 @@ public class InFoActivity2 extends Activity {
                             isPaiZhao2 = false;
 
                             try {
-                                Thread.sleep(5000);
+                                Thread.sleep(13000);
                                 if (mediaPlayer.isPlaying()) {
 
                                     startThread();
@@ -853,7 +853,7 @@ public class InFoActivity2 extends Activity {
 
                                     cishu++;
 
-                                    if (cishu == 3) {
+                                    if (cishu == 2) {
 
                                         isPaiZhao2=false;
                                         isPaiZhao = false;
@@ -872,7 +872,7 @@ public class InFoActivity2 extends Activity {
                                 }
 
 
-                            } catch (InterruptedException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
@@ -888,10 +888,6 @@ public class InFoActivity2 extends Activity {
 
         Log.d("InFoActivity2", "暂停");
 
-        handlerGongGao.removeCallbacks(runnableGongGao);
-        if (myJni!=null)
-            myJni.Mini_release();
-
         count=1;
 
         isTrue4=false;
@@ -900,19 +896,30 @@ public class InFoActivity2 extends Activity {
         isPaiZhao=false;
         isPaiZhao2=false;
 
+
+        if (mediaPlayer!=null){
+            mediaPlayer=null;
+            media=null;
+        }
         if (vlcVout!=null){
             vlcVout.detachViews();
             vlcVout.removeCallback(callback);
+            callback=null;
             vlcVout=null;
         }
         if (videoView!=null){
             videoView.setSurfaceTextureListener(null);
         }
+        if (libvlc!=null){
+            libvlc.release();
+        }
+        if (myJni!=null){
+            myJni.Mini_release();
+            myJni=null;
+        }
 
-        mediaPlayer=null;
-        media=null;
-        callback=null;
-        libvlc=null;
+
+        handlerGongGao.removeCallbacks(runnableGongGao);
 
 
         _beepManager.close();
@@ -1148,32 +1155,32 @@ public class InFoActivity2 extends Activity {
 
                                                        }
 
-                                                       int xx = 0;
-                                                       int yy = 0;
-                                                       int xx2 = 0;
-                                                       int yy2 = 0;
-                                                       int ww = bitmapBig.getWidth();
-                                                       int hh = bitmapBig.getHeight();
-                                                       if (face.getRight() - 300 >= 0) {
-                                                           xx = face.getRight() - 300;
-                                                       } else {
-                                                           xx = 0;
-                                                       }
-                                                       if (face.getTop() - 220 >= 0) {
-                                                           yy = face.getTop() - 220;
-                                                       } else {
-                                                           yy = 0;
-                                                       }
-                                                       if (xx + 430 <= ww) {
-                                                           xx2 = 430;
-                                                       } else {
-                                                           xx2 = ww - xx - 1;
-                                                       }
-                                                       if (yy + 430 <= hh) {
-                                                           yy2 = 430;
-                                                       } else {
-                                                           yy2 = hh - yy - 1;
-                                                       }
+//                                                       int xx = 0;
+//                                                       int yy = 0;
+//                                                       int xx2 = 0;
+//                                                       int yy2 = 0;
+//                                                       int ww = bitmapBig.getWidth();
+//                                                       int hh = bitmapBig.getHeight();
+//                                                       if (face.getRight() - 380 >= 0) {
+//                                                           xx = face.getRight() - 380;
+//                                                       } else {
+//                                                           xx = 0;
+//                                                       }
+//                                                       if (face.getTop() - 280 >= 0) {
+//                                                           yy = face.getTop() - 280;
+//                                                       } else {
+//                                                           yy = 0;
+//                                                       }
+//                                                       if (xx + 490 <= ww) {
+//                                                           xx2 = 490;
+//                                                       } else {
+//                                                           xx2 = ww - xx - 1;
+//                                                       }
+//                                                       if (yy + 490 <= hh) {
+//                                                           yy2 = 490;
+//                                                       } else {
+//                                                           yy2 = hh - yy - 1;
+//                                                       }
 
 //                                               Bitmap bmpf = bitmapBig.copy(Bitmap.Config.RGB_565, true);
 //
@@ -1230,20 +1237,21 @@ public class InFoActivity2 extends Activity {
 //                                                       yy2=500;
 //                                                   }
 
-                                                       Bitmap bitmap = Bitmap.createBitmap(bitmapBig, xx, yy, xx2, yy2);
+                                                    //   Bitmap bitmap = Bitmap.createBitmap(bitmapBig, xx, yy, xx2, yy2);
 
                                                        // Bitmap bitmap = Bitmap.createBitmap(bitmapBig,0,0,bitmapBig.getWidth(),bitmapBig.getHeight());
 
                                                        Message message3 = Message.obtain();
                                                        message3.what = MESSAGE_QR_SUCCESS;
-                                                       message3.obj = bitmap;
+                                                       message3.obj = bitmapBig;
                                                        mHandler2.sendMessage(message3);
 
 
                                                        String fn = "bbbb.jpg";
                                                        FileUtil.isExists(FileUtil.PATH, fn);
-                                                       saveBitmap2File2(bitmap, FileUtil.SDPATH + File.separator + FileUtil.PATH + File.separator + fn, 100);
-
+                                                       saveBitmap2File2(bitmapBig, FileUtil.SDPATH + File.separator + FileUtil.PATH + File.separator + fn, 100);
+                                                      // bitmapBig.recycle();
+                                                     //  bitmapBig=null;
 
                                                    } else {
                                                        isTrue4 = true;
@@ -1298,6 +1306,7 @@ public class InFoActivity2 extends Activity {
             bos.flush();
             bos.close();
 
+
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -1314,9 +1323,9 @@ public class InFoActivity2 extends Activity {
 
         } finally {
 
-//			if (!bm.isRecycled()) {
-//				bm.recycle();
-//			}
+			if (!bm.isRecycled()) {
+				bm.recycle();
+			}
             bm = null;
         }
     }
@@ -1472,9 +1481,11 @@ public class InFoActivity2 extends Activity {
                 try {
 
                     ResponseBody body = response.body();
-                    // Log.d("AllConnects", "aa   "+response.body().string());
+                    String ss=response.body().string();
 
-                    JsonObject jsonObject= GsonUtil.parse(body.string()).getAsJsonObject();
+                     Log.d("AllConnects", "2ss"+ss);
+
+                    JsonObject jsonObject= GsonUtil.parse(ss).getAsJsonObject();
                     Gson gson=new Gson();
                     Photos zhaoPianBean=gson.fromJson(jsonObject,Photos.class);
                     userInfoBena.setScanPhoto(zhaoPianBean.getExDesc());
@@ -1622,10 +1633,19 @@ public class InFoActivity2 extends Activity {
             @Override
             public void run() {
 
+
+                if (mediaPlayer!=null){
+                    mediaPlayer=null;
+                    media=null;
+                }
                 if (vlcVout!=null){
                     vlcVout.detachViews();
                     vlcVout.removeCallback(callback);
+                    callback=null;
                     vlcVout=null;
+                }
+                if (libvlc!=null){
+                    libvlc.release();
                 }
                 if (videoView!=null){
                     videoView.setSurfaceTextureListener(null);
@@ -1652,9 +1672,6 @@ public class InFoActivity2 extends Activity {
                 animator.start();
             }
         });
-
-
-
 
 
 

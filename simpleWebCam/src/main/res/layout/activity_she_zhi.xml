@@ -107,7 +107,7 @@
         <TextView
             android:textColor="@color/sbc_header_text"
             android:textSize="18sp"
-            android:text="瑞瞳智能科技有限公司"
+            android:text="中国电信集团公司"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

@@ -7,11 +7,11 @@
         android:id="@+id/op"
         layout="@layout/base_title"/>
 
-<com.camera.simplewebcam.view.X5WebView
+<WebView
     android:layout_width="match_parent"
     android:id="@+id/webwiew"
     android:layout_height="match_parent">
 
-</com.camera.simplewebcam.view.X5WebView>
+</WebView>
 
 </RelativeLayout>

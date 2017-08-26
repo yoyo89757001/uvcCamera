@@ -4,26 +4,26 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.anupcowkur.reservoir.Reservoir;
 import com.anupcowkur.reservoir.ReservoirGetCallback;
 import com.camera.simplewebcam.R;
-import com.camera.simplewebcam.view.X5WebView;
+
 import com.google.gson.reflect.TypeToken;
 import com.sdsmdg.tastytoast.TastyToast;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
+
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 public class ChaXunActivity extends Activity {
-    private X5WebView webView;
+    private WebView webView;
     private TextView title;
     private ImageView famhui;
 
@@ -31,7 +31,7 @@ public class ChaXunActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cha_xun);
-        webView= (X5WebView) findViewById(R.id.webwiew);
+        webView= (WebView) findViewById(R.id.webwiew);
 
 
         title= (TextView) findViewById(R.id.title);
@@ -101,7 +101,9 @@ public class ChaXunActivity extends Activity {
 
                     }
                     System.out.println(strGBK);
-                    webView.loadUrl(i+"/Police/ipad.html?accountName="+strGBK);
+
+                    webView.loadUrl(i+"/police/ipad.html?accountName="+strGBK);
+
                 }
 
                 @Override
