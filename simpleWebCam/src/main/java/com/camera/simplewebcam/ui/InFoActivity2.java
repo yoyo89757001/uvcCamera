@@ -360,12 +360,14 @@ public class InFoActivity2 extends Activity {
 
                             break;
                         case 188:
-
-                            String strMsg188 = (String) msg.obj;
-                            toastShow1.toastShow(strMsg188);
-                            if (jiaZaiDialog!=null && jiaZaiDialog.isShowing()){
-                                jiaZaiDialog.setText("开启摄像失败,返回后重试");
-                            }
+                            Toast tastyToast= TastyToast.makeText(InFoActivity2.this,"因开启摄像头失败,需要重新读卡开启摄像头",TastyToast.LENGTH_LONG,TastyToast.INFO);
+                            tastyToast.setGravity(Gravity.CENTER,0,0);
+                            tastyToast.show();
+//                            String strMsg188 = (String) msg.obj;
+//                            toastShow1.toastShow(strMsg188);
+//                            if (jiaZaiDialog!=null && jiaZaiDialog.isShowing()){
+//                                jiaZaiDialog.setText("开启摄像失败,返回后重试");
+//                            }
 
                             break;
                         case 33:
@@ -571,10 +573,14 @@ public class InFoActivity2 extends Activity {
 
                 if (iCardRead == -1) {
                     strMsg3 = "搜寻设备失败！";
+
+                    ReadRfidCardThread readSimCardThread = new ReadRfidCardThread();
+                    readSimCardThread.run();
+                    return;
                     //Toast.makeText(ywclActivity, "搜寻设备失败！", Toast.LENGTH_SHORT).show();
                 } else if (iCardRead == -2) {
                     strMsg3 = "搜寻身份证失败！";
-                    //Toast.makeText(ywclActivity, "搜寻身份证失败！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InFoActivity2.this, "搜寻身份证失败！", Toast.LENGTH_SHORT).show();
                 } else if (iCardRead == -3) {
                     strMsg3 = "读取身份证信息失败！";
                     //Toast.makeText(ywclActivity, "读取身份证信息失败！", Toast.LENGTH_SHORT).show();
@@ -844,7 +850,7 @@ public class InFoActivity2 extends Activity {
                             isPaiZhao2 = false;
 
                             try {
-                                Thread.sleep(13000);
+                                Thread.sleep(8000);
                                 if (mediaPlayer.isPlaying()) {
 
                                     startThread();
@@ -853,15 +859,20 @@ public class InFoActivity2 extends Activity {
 
                                     cishu++;
 
-                                    if (cishu == 2) {
+                                    if (cishu == 1) {
 
                                         isPaiZhao2=false;
                                         isPaiZhao = false;
 
                                         Message message3 = new Message();
                                         message3.what = 188;
-                                        message3.obj = "开启摄像头失败，请返回后重试";
                                         mhandler.sendMessage(message3);
+
+                                        Intent intent=new Intent();
+                                        intent.putExtra("date", "11");
+                                        setResult(Activity.RESULT_OK, intent);
+
+                                        finish();
 
                                     } else {
 
@@ -897,6 +908,19 @@ public class InFoActivity2 extends Activity {
         isPaiZhao2=false;
 
 
+
+        if (myJni!=null){
+            myJni.Mini_release();
+            myJni=null;
+        }
+
+
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
         if (mediaPlayer!=null){
             mediaPlayer=null;
             media=null;
@@ -913,12 +937,6 @@ public class InFoActivity2 extends Activity {
         if (libvlc!=null){
             libvlc.release();
         }
-        if (myJni!=null){
-            myJni.Mini_release();
-            myJni=null;
-        }
-
-
         handlerGongGao.removeCallbacks(runnableGongGao);
 
 
@@ -927,12 +945,6 @@ public class InFoActivity2 extends Activity {
         if (jiaZaiDialog!=null && jiaZaiDialog.isShowing()){
             jiaZaiDialog.dismiss();
         }
-
-    }
-
-    @Override
-    protected void onDestroy() {
-
         unregisterReceiver(sensorInfoReceiver);
         super.onDestroy();
 
@@ -1155,34 +1167,34 @@ public class InFoActivity2 extends Activity {
 
                                                        }
 
-//                                                       int xx = 0;
-//                                                       int yy = 0;
-//                                                       int xx2 = 0;
-//                                                       int yy2 = 0;
-//                                                       int ww = bitmapBig.getWidth();
-//                                                       int hh = bitmapBig.getHeight();
-//                                                       if (face.getRight() - 380 >= 0) {
-//                                                           xx = face.getRight() - 380;
-//                                                       } else {
-//                                                           xx = 0;
-//                                                       }
-//                                                       if (face.getTop() - 280 >= 0) {
-//                                                           yy = face.getTop() - 280;
-//                                                       } else {
-//                                                           yy = 0;
-//                                                       }
-//                                                       if (xx + 490 <= ww) {
-//                                                           xx2 = 490;
-//                                                       } else {
-//                                                           xx2 = ww - xx - 1;
-//                                                       }
-//                                                       if (yy + 490 <= hh) {
-//                                                           yy2 = 490;
-//                                                       } else {
-//                                                           yy2 = hh - yy - 1;
-//                                                       }
+                                                       int xx = 0;
+                                                       int yy = 0;
+                                                       int xx2 = 0;
+                                                       int yy2 = 0;
+                                                       int ww = bitmapBig.getWidth();
+                                                       int hh = bitmapBig.getHeight();
+                                                       if (face.getRight() - 250 >= 0) {
+                                                           xx = face.getRight() - 250;
+                                                       } else {
+                                                           xx = 0;
+                                                       }
+                                                       if (face.getTop() - 330 >= 0) {
+                                                           yy = face.getTop() - 330;
+                                                       } else {
+                                                           yy = 0;
+                                                       }
+                                                       if (xx + 360 <= ww) {
+                                                           xx2 = 360;
+                                                       } else {
+                                                           xx2 = ww - xx ;
+                                                       }
+                                                       if (yy + 420 <= hh) {
+                                                           yy2 = 420;
+                                                       } else {
+                                                           yy2 = hh - yy ;
+                                                       }
 
-//                                               Bitmap bmpf = bitmapBig.copy(Bitmap.Config.RGB_565, true);
+                                          //     Bitmap bmpf = bitmapBig.copy(Bitmap.Config.RGB_565, true);
 //
 //                                               //返回识别的人脸数
 //                                               //	int faceCount = new FaceDetector(bmpf.getWidth(), bmpf.getHeight(), 1).findFaces(bmpf, facess);
@@ -1237,21 +1249,21 @@ public class InFoActivity2 extends Activity {
 //                                                       yy2=500;
 //                                                   }
 
-                                                    //   Bitmap bitmap = Bitmap.createBitmap(bitmapBig, xx, yy, xx2, yy2);
+                                                       Bitmap bitmap = Bitmap.createBitmap(bitmapBig, xx, yy, xx2, yy2);
 
                                                        // Bitmap bitmap = Bitmap.createBitmap(bitmapBig,0,0,bitmapBig.getWidth(),bitmapBig.getHeight());
 
                                                        Message message3 = Message.obtain();
                                                        message3.what = MESSAGE_QR_SUCCESS;
-                                                       message3.obj = bitmapBig;
+                                                       message3.obj = bitmap;
                                                        mHandler2.sendMessage(message3);
 
 
                                                        String fn = "bbbb.jpg";
                                                        FileUtil.isExists(FileUtil.PATH, fn);
-                                                       saveBitmap2File2(bitmapBig, FileUtil.SDPATH + File.separator + FileUtil.PATH + File.separator + fn, 100);
-                                                      // bitmapBig.recycle();
-                                                     //  bitmapBig=null;
+                                                       saveBitmap2File2(bitmap, FileUtil.SDPATH + File.separator + FileUtil.PATH + File.separator + fn, 100);
+                                                       bitmapBig.recycle();
+                                                       bitmapBig=null;
 
                                                    } else {
                                                        isTrue4 = true;
@@ -1649,6 +1661,12 @@ public class InFoActivity2 extends Activity {
                 }
                 if (videoView!=null){
                     videoView.setSurfaceTextureListener(null);
+                }
+
+
+                if (myJni!=null){
+                    myJni.Mini_release();
+                    myJni=null;
                 }
 
             }
