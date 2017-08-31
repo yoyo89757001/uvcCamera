@@ -28,6 +28,7 @@ import com.anupcowkur.reservoir.Reservoir;
 import com.anupcowkur.reservoir.ReservoirGetCallback;
 import com.camera.simplewebcam.MyAppLaction;
 import com.camera.simplewebcam.R;
+import com.camera.simplewebcam.beans.JiuDianBean;
 import com.camera.simplewebcam.beans.Photos;
 import com.camera.simplewebcam.beans.ShiBieBean;
 import com.camera.simplewebcam.beans.UserInfoBena;
@@ -142,7 +143,7 @@ public class InFoActivity2 extends Activity {
     private byte[] cardinfo = new byte[256 * 8 + 1024];
     private FaceDet mFaceDet;
     private  String zhuji=null;
-
+    private  JiuDianBean jiuDianBean=null;
 
 
     // 性别数组
@@ -217,6 +218,10 @@ public class InFoActivity2 extends Activity {
         });
 
         mFaceDet= MyAppLaction.mFaceDet;
+        ip=MyAppLaction.sip;
+        jiuDianBean=MyAppLaction.jiuDianBean;
+
+
         isTrue3=true;
         isTrue4=true;
         isPaiZhao=true;
@@ -360,7 +365,7 @@ public class InFoActivity2 extends Activity {
 
                             break;
                         case 188:
-                            Toast tastyToast= TastyToast.makeText(InFoActivity2.this,"因开启摄像头失败,需要重新读卡开启摄像头",TastyToast.LENGTH_LONG,TastyToast.INFO);
+                            Toast tastyToast= TastyToast.makeText(InFoActivity2.this,"当前网络不稳定,需要重新读卡开启摄像头,请稍候",TastyToast.LENGTH_LONG,TastyToast.INFO);
                             tastyToast.setGravity(Gravity.CENTER,0,0);
                             tastyToast.show();
 //                            String strMsg188 = (String) msg.obj;
@@ -381,14 +386,13 @@ public class InFoActivity2 extends Activity {
         }
 
 
-
         IntentFilter intentFilter1 = new IntentFilter();
         intentFilter1.addAction("guanbi");
         sensorInfoReceiver = new SensorInfoReceiver();
         registerReceiver(sensorInfoReceiver, intentFilter1);
 
         videoView= (AutoFitTextureView) findViewById(R.id.fff);
-        videoView.setAspectRatio(2,1);
+        videoView.setAspectRatio(4,3);
         imageView= (ImageView) findViewById(R.id.ffff);
 
         jiemian= (LinearLayout) findViewById(R.id.jiemian);
@@ -399,12 +403,6 @@ public class InFoActivity2 extends Activity {
         vlcVout = mediaPlayer.getVLCVout();
 
 
-        Type resultType = new TypeToken<String>() {
-        }.getType();
-        Reservoir.getAsync("ipipip", resultType, new ReservoirGetCallback<String>() {
-            @Override
-            public void onSuccess(final String i) {
-                ip=i;
                 callback=new IVLCVout.Callback() {
                     @Override
                     public void onNewLayout(IVLCVout vlcVout, int width, int height, int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
@@ -413,13 +411,21 @@ public class InFoActivity2 extends Activity {
 
                     @Override
                     public void onSurfacesCreated(IVLCVout vlcVout) {
-                        if (mediaPlayer != null) {
-                            final Uri uri=Uri.parse("rtsp://"+ip+"/user=admin&password=&channel=1&stream=0.sdp");
-                            media = new Media(libvlc, uri);
-                            mediaPlayer.setMedia(media);
-                            videoView.setKeepScreenOn(true);
-                            mediaPlayer.play();
 
+                        if (ip!=null){
+                            if (mediaPlayer != null) {
+                                final Uri uri=Uri.parse("rtsp://"+ip+"/user=admin&password=&channel=1&stream=0.sdp");
+                                media = new Media(libvlc, uri);
+                                mediaPlayer.setMedia(media);
+                                videoView.setKeepScreenOn(true);
+                                mediaPlayer.play();
+
+                            }
+                        }else {
+
+                            Toast tastyToast = TastyToast.makeText(InFoActivity2.this, "请先设置摄像头IP地址", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                            tastyToast.setGravity(Gravity.CENTER, 0, 0);
+                            tastyToast.show();
 
                         }
 
@@ -458,46 +464,17 @@ public class InFoActivity2 extends Activity {
                     @Override
                     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
 
-                        Log.d("InFoActivity2", "ddddd"+surface.getTimestamp());
-                        surface.setOnFrameAvailableListener(new SurfaceTexture.OnFrameAvailableListener() {
-                            @Override
-                            public void onFrameAvailable(SurfaceTexture surfaceTexture) {
-                                Log.d("InFoActivity2", "surfaceTexture.getTimestamp():" + surfaceTexture.getTimestamp());
 
-                            }
-                        });
                     }
                 });
 
 
                 vlcVout.addCallback(callback);
                 vlcVout.setVideoView(videoView);
-            }
 
-            @Override
-            public void onFailure(Exception e) {
-
-               runOnUiThread(new Runnable() {
-                   @Override
-                   public void run() {
-                       Toast tastyToast= TastyToast.makeText(InFoActivity2.this,"请先设置摄像头IP",TastyToast.LENGTH_LONG,TastyToast.ERROR);
-                       tastyToast.setGravity(Gravity.CENTER,0,0);
-                       tastyToast.show();
-                       Toast tastyToast2= TastyToast.makeText(InFoActivity2.this,"请先设置摄像头IP",TastyToast.LENGTH_LONG,TastyToast.ERROR);
-                       tastyToast2.setGravity(Gravity.CENTER,0,0);
-                       tastyToast2.show();
-                   }
-               });
-
-
-            }
-
-        });
 
         userInfoBena=new UserInfoBena();
 
-        //ip = Utils.getIp(this);
-       // String source = Utils.getPassword(this);
 
         ImageView imageView= (ImageView) findViewById(R.id.dd);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -527,18 +504,20 @@ public class InFoActivity2 extends Activity {
         @Override
         public void run() {
             // //【功能】探测身份证卡片是否存在
+            if (myJni != null) {
 
-             int iRfidCardIsFind = myJni.Mini_rfid_card_is_find (600);
+            int iRfidCardIsFind = myJni.Mini_rfid_card_is_find(600);
 
-            if (iRfidCardIsFind==1){
+            if (iRfidCardIsFind == 1) {
                 //读卡
                 ReadRfidCardThread readSimCardThread = new ReadRfidCardThread();
                 readSimCardThread.run();
 
-            }else {
+            } else {
 
-                handlerGongGao.postDelayed(runnableGongGao,1000);//4秒后再次执行
+                handlerGongGao.postDelayed(runnableGongGao, 1000);//4秒后再次执行
             }
+        }
 
         }
     };
@@ -564,7 +543,7 @@ public class InFoActivity2 extends Activity {
 
         @Override
         public void run() {
-            Log.d("ReadRfidCardThread", "读卡");
+           // Log.d("ReadRfidCardThread", "读卡");
 
                 Arrays.fill(cardinfo, (byte) 32);
                 short[] len = new short[4];
@@ -572,23 +551,24 @@ public class InFoActivity2 extends Activity {
                         cardinfo, len);
 
                 if (iCardRead == -1) {
-                    strMsg3 = "搜寻设备失败！";
-
+                  //  Log.d("ReadRfidCardThread", "搜寻设备失败");
+                    Toast tastyToast= TastyToast.makeText(InFoActivity2.this,"读取信息失败！因身份证磁性较弱,再次读取中...",TastyToast.LENGTH_LONG,TastyToast.ERROR);
+                    tastyToast.setGravity(Gravity.CENTER,0,0);
+                    tastyToast.show();
                     ReadRfidCardThread readSimCardThread = new ReadRfidCardThread();
                     readSimCardThread.run();
                     return;
                     //Toast.makeText(ywclActivity, "搜寻设备失败！", Toast.LENGTH_SHORT).show();
                 } else if (iCardRead == -2) {
-                    strMsg3 = "搜寻身份证失败！";
-                    Toast.makeText(InFoActivity2.this, "搜寻身份证失败！", Toast.LENGTH_SHORT).show();
+                    strMsg3 = "读取信息失败！";
+                    Toast.makeText(InFoActivity2.this, "读取信息失败！", Toast.LENGTH_SHORT).show();
                 } else if (iCardRead == -3) {
-                    strMsg3 = "读取身份证信息失败！";
+                    strMsg3 = "读取信息失败！";
                     //Toast.makeText(ywclActivity, "读取身份证信息失败！", Toast.LENGTH_SHORT).show();
                 } else if (iCardRead == -4) {
                     strMsg3 = "用户取消身份证识别！";
                     //Toast.makeText(ywclActivity, "用户取消身份证识别！", Toast.LENGTH_SHORT).show();
                 } else if (iCardRead == 1) {
-
 
                     // 文字信息长度
                     int iDataLen3 = cardinfo[10] * 256 + cardinfo[11];
@@ -723,7 +703,7 @@ public class InFoActivity2 extends Activity {
             @Override
             public void onClick(View v) {
 
-                if (!userInfoBena.getCertNumber().equals("")){
+                if (!userInfoBena.getCertNumber().equals("") && jiuDianBean!=null){
                     try {
 
                         link_save();
@@ -799,7 +779,6 @@ public class InFoActivity2 extends Activity {
      */
     public  void saveBitmap2File(Bitmap bm, final String path, int quality) {
         if (null == bm || bm.isRecycled()) {
-
             return ;
         }
         try {
@@ -844,10 +823,7 @@ public class InFoActivity2 extends Activity {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while (isPaiZhao) {
 
-                        if (isPaiZhao2) {
-                            isPaiZhao2 = false;
 
                             try {
                                 Thread.sleep(8000);
@@ -856,13 +832,6 @@ public class InFoActivity2 extends Activity {
                                     startThread();
 
                                 } else {
-
-                                    cishu++;
-
-                                    if (cishu == 1) {
-
-                                        isPaiZhao2=false;
-                                        isPaiZhao = false;
 
                                         Message message3 = new Message();
                                         message3.what = 188;
@@ -874,20 +843,12 @@ public class InFoActivity2 extends Activity {
 
                                         finish();
 
-                                    } else {
-
-                                        isPaiZhao2=true;
-
-                                    }
-
                                 }
-
 
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        }
-                }
+
                 }
             }).start();
         }
@@ -897,7 +858,7 @@ public class InFoActivity2 extends Activity {
     protected void onPause() {
         super.onPause();
 
-        Log.d("InFoActivity2", "暂停");
+    //    Log.d("InFoActivity2", "暂停");
 
         count=1;
 
@@ -914,13 +875,6 @@ public class InFoActivity2 extends Activity {
             myJni=null;
         }
 
-
-
-
-    }
-
-    @Override
-    protected void onDestroy() {
         if (mediaPlayer!=null){
             mediaPlayer=null;
             media=null;
@@ -937,6 +891,13 @@ public class InFoActivity2 extends Activity {
         if (libvlc!=null){
             libvlc.release();
         }
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+
         handlerGongGao.removeCallbacks(runnableGongGao);
 
 
@@ -977,7 +938,7 @@ public class InFoActivity2 extends Activity {
                 .add("organ",userInfoBena.getCertOrg())
                 .add("termStart",userInfoBena.getEffDate())
                 .add("termEnd",userInfoBena.getExpDate())
-                .add("accountId","1")
+                .add("accountId",jiuDianBean.getId())
                 .add("result",biduijieguo)
                 .add("homeNumber",fanghao.getText().toString().trim())
                 .add("phone",dianhua.getText().toString().trim())
@@ -1002,7 +963,7 @@ public class InFoActivity2 extends Activity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d("AllConnects", "请求识别失败"+e.getMessage());
+              //  Log.d("AllConnects", "请求识别失败"+e.getMessage());
                 if (tiJIaoDialog!=null){
                     tiJIaoDialog.dismiss();
                 }
@@ -1013,13 +974,13 @@ public class InFoActivity2 extends Activity {
                 if (tiJIaoDialog!=null){
                     tiJIaoDialog.dismiss();
                 }
-                Log.d("AllConnects", "请求识别成功"+call.request().toString());
+             //   Log.d("AllConnects", "请求识别成功"+call.request().toString());
                 //获得返回体
                 try {
 
                     ResponseBody body = response.body();
                     String ss=body.string().trim();
-                    Log.d("InFoActivity", "ss" + ss);
+                 //   Log.d("InFoActivity", "ss" + ss);
                     if (ss.contains("1")){
 
                         runOnUiThread(new Runnable() {
@@ -1086,7 +1047,6 @@ public class InFoActivity2 extends Activity {
 
 
     private void startThread(){
-
 
         if (jiaZaiDialog!=null && jiaZaiDialog.isShowing()){
             jiaZaiDialog.dismiss();
@@ -1173,23 +1133,23 @@ public class InFoActivity2 extends Activity {
                                                        int yy2 = 0;
                                                        int ww = bitmapBig.getWidth();
                                                        int hh = bitmapBig.getHeight();
-                                                       if (face.getRight() - 250 >= 0) {
-                                                           xx = face.getRight() - 250;
+                                                       if (face.getRight() - 160 >= 0) {
+                                                           xx = face.getRight() - 160;
                                                        } else {
                                                            xx = 0;
                                                        }
-                                                       if (face.getTop() - 330 >= 0) {
-                                                           yy = face.getTop() - 330;
+                                                       if (face.getTop() - 120 >= 0) {
+                                                           yy = face.getTop() - 120;
                                                        } else {
                                                            yy = 0;
                                                        }
-                                                       if (xx + 360 <= ww) {
-                                                           xx2 = 360;
+                                                       if (xx + 200 <= ww) {
+                                                           xx2 = 200;
                                                        } else {
                                                            xx2 = ww - xx ;
                                                        }
-                                                       if (yy + 420 <= hh) {
-                                                           yy2 = 420;
+                                                       if (yy + 300 <= hh) {
+                                                           yy2 = 300;
                                                        } else {
                                                            yy2 = hh - yy ;
                                                        }
@@ -1261,7 +1221,7 @@ public class InFoActivity2 extends Activity {
 
                                                        String fn = "bbbb.jpg";
                                                        FileUtil.isExists(FileUtil.PATH, fn);
-                                                       saveBitmap2File2(bitmap, FileUtil.SDPATH + File.separator + FileUtil.PATH + File.separator + fn, 100);
+                                                       saveBitmap2File2(bitmap.copy(Bitmap.Config.ARGB_8888,false), FileUtil.SDPATH + File.separator + FileUtil.PATH + File.separator + fn, 100);
                                                        bitmapBig.recycle();
                                                        bitmapBig=null;
 
@@ -1304,7 +1264,7 @@ public class InFoActivity2 extends Activity {
         try {
             filePath2=path;
             if (null == bm) {
-                Log.d("InFoActivity", "回收|空");
+               // Log.d("InFoActivity", "回收|空");
                 return ;
             }
 
@@ -1395,19 +1355,19 @@ public class InFoActivity2 extends Activity {
                         tishi.setText("上传图片出错，请返回后重试！");
                     }
                 });
-                Log.d("AllConnects", "请求识别失败"+e.getMessage());
+               // Log.d("AllConnects", "请求识别失败"+e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d("AllConnects", "请求识别成功"+call.request().toString());
+               // Log.d("AllConnects", "请求识别成功"+call.request().toString());
                 //获得返回体
                 try {
 
                     ResponseBody body = response.body();
                     String ss=body.string();
 
-                    Log.d("AllConnects", "aa   "+ss);
+                  //  Log.d("AllConnects", "aa   "+ss);
 
                     JsonObject jsonObject= GsonUtil.parse(ss).getAsJsonObject();
                     Gson gson=new Gson();
@@ -1475,7 +1435,7 @@ public class InFoActivity2 extends Activity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d("AllConnects", "请求识别失败"+e.getMessage());
+               // Log.d("AllConnects", "请求识别失败"+e.getMessage());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -1486,7 +1446,7 @@ public class InFoActivity2 extends Activity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d("AllConnects", "请求识别成功"+call.request().toString());
+           //     Log.d("AllConnects", "请求识别成功"+call.request().toString());
                 //删掉文件
 
                 //获得返回体
@@ -1495,7 +1455,7 @@ public class InFoActivity2 extends Activity {
                     ResponseBody body = response.body();
                     String ss=response.body().string();
 
-                     Log.d("AllConnects", "2ss"+ss);
+                 //    Log.d("AllConnects", "2ss"+ss);
 
                     JsonObject jsonObject= GsonUtil.parse(ss).getAsJsonObject();
                     Gson gson=new Gson();
@@ -1575,7 +1535,7 @@ public class InFoActivity2 extends Activity {
                     Gson gson=new Gson();
                     final ShiBieBean zhaoPianBean=gson.fromJson(jsonObject,ShiBieBean.class);
 
-                    if (zhaoPianBean.getScore()>=75.0) {
+                    if (zhaoPianBean.getScore()>=65.0) {
 
                         //比对成功
                         sendBroadcast(new Intent("guanbi").putExtra("biduijieguo",true)

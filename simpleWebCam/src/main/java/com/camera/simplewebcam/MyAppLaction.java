@@ -8,11 +8,15 @@ import android.util.Log;
 import com.anupcowkur.reservoir.Reservoir;
 
 
+import com.anupcowkur.reservoir.ReservoirGetCallback;
+import com.camera.simplewebcam.beans.JiuDianBean;
+import com.google.gson.reflect.TypeToken;
 import com.tzutalin.dlib.Constants;
 import com.tzutalin.dlib.FaceDet;
 import java.io.File;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 
 
 /**
@@ -22,6 +26,9 @@ import java.io.IOException;
 public class MyAppLaction extends Application{
     private File mCascadeFile;
     public static FaceDet mFaceDet;
+    public static String sip=null;
+    public static JiuDianBean jiuDianBean=null;
+
    // public static CascadeClassifier mJavaDetector;
 
 //    static {
@@ -100,7 +107,38 @@ public class MyAppLaction extends Application{
 //        } catch (IOException e) {
 //            Log.d("InFoActivity2", e.getMessage());
 //        }
+        Type resultType = new TypeToken<String>() {
+        }.getType();
+        Reservoir.getAsync("ipipip", resultType, new ReservoirGetCallback<String>() {
+            @Override
+            public void onSuccess(final String i) {
+                sip=i;
 
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.d("MyAppLaction", e.getMessage()+"获取摄像头异常");
+
+            }
+
+        });
+
+        Type resultType3 = new TypeToken<String>() {
+        }.getType();
+        Reservoir.getAsync("jiudian", resultType3, new ReservoirGetCallback<JiuDianBean>() {
+            @Override
+            public void onSuccess(final JiuDianBean i) {
+                jiuDianBean=i;
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+
+        });
 
     }
 
