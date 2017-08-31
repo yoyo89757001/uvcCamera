@@ -9,17 +9,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.anupcowkur.reservoir.Reservoir;
 import com.anupcowkur.reservoir.ReservoirGetCallback;
 import com.camera.simplewebcam.MyAppLaction;
 import com.camera.simplewebcam.R;
-
 import com.camera.simplewebcam.beans.JiuDianBean;
 import com.google.gson.reflect.TypeToken;
 import com.sdsmdg.tastytoast.TastyToast;
-
-
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.URLEncoder;
