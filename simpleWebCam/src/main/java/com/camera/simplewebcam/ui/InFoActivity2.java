@@ -1138,8 +1138,8 @@ public class InFoActivity2 extends Activity {
                                                        } else {
                                                            xx = 0;
                                                        }
-                                                       if (face.getTop() - 120 >= 0) {
-                                                           yy = face.getTop() - 120;
+                                                       if (face.getTop() - 140 >= 0) {
+                                                           yy = face.getTop() - 140;
                                                        } else {
                                                            yy = 0;
                                                        }
@@ -1148,8 +1148,8 @@ public class InFoActivity2 extends Activity {
                                                        } else {
                                                            xx2 = ww - xx ;
                                                        }
-                                                       if (yy + 300 <= hh) {
-                                                           yy2 = 300;
+                                                       if (yy + 320 <= hh) {
+                                                           yy2 = 320;
                                                        } else {
                                                            yy2 = hh - yy ;
                                                        }

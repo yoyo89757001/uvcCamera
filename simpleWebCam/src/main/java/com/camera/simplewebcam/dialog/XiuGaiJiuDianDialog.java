@@ -33,7 +33,7 @@ public class XiuGaiJiuDianDialog extends Dialog {
         View mView = LayoutInflater.from(getContext()).inflate(R.layout.xiugaidialog3, null);
 
         jiudianname= (EditText) mView.findViewById(R.id.xiangce);
-        idid= (EditText) findViewById(R.id.idid);
+        idid= (EditText)mView.findViewById(R.id.idid2);
        // title2= (TextView) mView.findViewById(R.id.title2);
         l1= (Button)mView. findViewById(R.id.queren);
         l2= (Button) mView.findViewById(R.id.quxiao);

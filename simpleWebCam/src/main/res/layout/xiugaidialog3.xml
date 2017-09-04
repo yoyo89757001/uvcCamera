@@ -47,7 +47,7 @@
         android:paddingLeft="16dp"
         android:background="@null"
         android:gravity="center_vertical"
-        android:id="@+id/idid"
+        android:id="@+id/idid2"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 </LinearLayout>
