@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
@@ -144,7 +145,8 @@ public class InFoActivity2 extends Activity {
     private FaceDet mFaceDet;
     private  String zhuji=null;
     private  JiuDianBean jiuDianBean=null;
-
+    private boolean isBaoCun=false;
+    private boolean isReadCard=false;
 
     // 性别数组
     private String[] strSex = new String[10];
@@ -705,7 +707,7 @@ public class InFoActivity2 extends Activity {
 
                 if (!userInfoBena.getCertNumber().equals("") && jiuDianBean!=null){
                     try {
-
+                        isBaoCun=true;
                         link_save();
 
                     }catch (Exception e){
@@ -792,7 +794,7 @@ public class InFoActivity2 extends Activity {
             bos.flush();
             bos.close();
             shengfenzhengPath=path;
-
+            isReadCard=true;
 
             kaishiPaiZhao();
 
@@ -1494,8 +1496,21 @@ public class InFoActivity2 extends Activity {
 //    /* form的分割线,自己定义 */
 //        String boundary = "xx--------------------------------------------------------------xx";
         RequestBody body = new FormBody.Builder()
+                .add("cardNumber",userInfoBena.getCertNumber())
+                .add("name",userInfoBena.getPartyName())
+                .add("gender",userInfoBena.getGender())
+                .add("birthday",userInfoBena.getBornDay())
+                .add("address",userInfoBena.getCertAddress())
                 .add("cardPhoto",userInfoBena.getCardPhoto())
                 .add("scanPhoto",userInfoBena.getScanPhoto())
+                .add("organ",userInfoBena.getCertOrg())
+                .add("termStart",userInfoBena.getEffDate())
+                .add("termEnd",userInfoBena.getExpDate())
+                .add("accountId",jiuDianBean.getId()+"")
+                .add("count",count+"")
+                .add("homeNumber",fanghao.getText().toString().trim())
+                .add("phone",dianhua.getText().toString().trim())
+                .add("carNumber",chepaihao.getText().toString().trim())
                 .build();
 
         Request.Builder requestBuilder = new Request.Builder()
@@ -1654,4 +1669,17 @@ public class InFoActivity2 extends Activity {
 
 
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            if (isReadCard && !isBaoCun){
+                link_save();
+
+            }
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }
