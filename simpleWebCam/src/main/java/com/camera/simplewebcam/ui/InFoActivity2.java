@@ -953,7 +953,7 @@ public class InFoActivity2 extends Activity {
                 .post(body)
                 .url(zhuji + "/saveCompareResult.do");
 
-        if (tiJIaoDialog==null){
+        if (!InFoActivity2.this.isFinishing() && tiJIaoDialog==null  ){
             tiJIaoDialog=new TiJIaoDialog(InFoActivity2.this);
             tiJIaoDialog.show();
         }
