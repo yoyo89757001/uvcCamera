@@ -894,7 +894,13 @@ public class InFoActivity2 extends Activity {
             libvlc.release();
         }
 
-
+        if (tiJIaoDialog!=null && tiJIaoDialog.isShowing()){
+            tiJIaoDialog.dismiss();
+            tiJIaoDialog=null;
+        }
+        if (jiaZaiDialog!=null && jiaZaiDialog.isShowing()){
+            jiaZaiDialog.dismiss();
+        }
     }
 
     @Override
@@ -905,9 +911,7 @@ public class InFoActivity2 extends Activity {
 
         _beepManager.close();
 
-        if (jiaZaiDialog!=null && jiaZaiDialog.isShowing()){
-            jiaZaiDialog.dismiss();
-        }
+
         unregisterReceiver(sensorInfoReceiver);
         super.onDestroy();
 
