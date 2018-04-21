@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libuvccamera/libuvccamera.iml" filepath="$PROJECT_DIR$/libuvccamera/libuvccamera.iml" />
+      <module fileurl="file://$PROJECT_DIR$/openCVLibrary320/openCVLibrary320.iml" filepath="$PROJECT_DIR$/openCVLibrary320/openCVLibrary320.iml" />
+      <module fileurl="file://$PROJECT_DIR$/simpleWebCam/simpleWebCam.iml" filepath="$PROJECT_DIR$/simpleWebCam/simpleWebCam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uvcCamera.iml" filepath="$PROJECT_DIR$/uvcCamera.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vlc-android-sdk-master/vlc-android-sdk-master.iml" filepath="$PROJECT_DIR$/vlc-android-sdk-master/vlc-android-sdk-master.iml" />
+    </modules>
+  </component>
+</project>

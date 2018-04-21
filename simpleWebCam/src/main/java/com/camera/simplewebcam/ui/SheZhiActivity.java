@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.anupcowkur.reservoir.Reservoir;
-import com.anupcowkur.reservoir.ReservoirGetCallback;
+
 import com.anupcowkur.reservoir.ReservoirPutCallback;
 import com.camera.simplewebcam.MyAppLaction;
 import com.camera.simplewebcam.R;
@@ -17,7 +17,7 @@ import com.camera.simplewebcam.beans.BaoCunBeanDao;
 import com.camera.simplewebcam.beans.JiuDianBean;
 import com.camera.simplewebcam.dialog.XiuGaiJiuDianDialog;
 import com.camera.simplewebcam.dialog.XiuGaiXinXiDialog;
-import com.google.gson.reflect.TypeToken;
+
 import com.sdsmdg.tastytoast.TastyToast;
 
 import java.lang.reflect.Type;

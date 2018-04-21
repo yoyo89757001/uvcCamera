@@ -686,7 +686,7 @@ public class XinJiangActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if (!userInfoBena.getCertNumber().equals("") && jiuDianBean!=null){
+                if (!userInfoBena.getCertNumber().equals("")){
                     try {
                         isBaoCun=true;
                         link_save();
@@ -718,35 +718,37 @@ public class XinJiangActivity extends Activity {
 
     }
 
-
+    private boolean oo=true;
     private class SensorInfoReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
 
             String action = intent.getAction();
+            if (oo){
+                oo=false;
             if (action.equals("guanbi")) {
                 userInfoBena.setCardPhoto(intent.getStringExtra("cardPath"));
                 userInfoBena.setScanPhoto(intent.getStringExtra("saomiaoPath"));
 
-               if (intent.getBooleanExtra("biduijieguo",true)){
-                   shibiejieguo.setText("比对通过");
-                   biduijieguo="比对通过";
-                   quxiao.setVisibility(View.GONE);
+                if (intent.getBooleanExtra("biduijieguo", true)) {
+                    shibiejieguo.setText("比对通过");
+                    biduijieguo = "比对通过";
+                    quxiao.setVisibility(View.GONE);
 
-               }else {
-                   shibiejieguo.setText("比对不通过");
-                   biduijieguo="比对不通过";
-                   quxiao.setVisibility(View.VISIBLE);
+                } else {
+                    shibiejieguo.setText("比对不通过");
+                    biduijieguo = "比对不通过";
+                    quxiao.setVisibility(View.VISIBLE);
 
-               }
-               xiangsi=intent.getStringExtra("xiangsidu");
-                xiangsifdu.setText(intent.getStringExtra("xiangsidu")+"");
+                }
+                xiangsi = intent.getStringExtra("xiangsidu");
+                xiangsifdu.setText(intent.getStringExtra("xiangsidu") + "");
 
-                Bitmap bitmap= BitmapFactory.decodeFile(FileUtil.SDPATH+ File.separator+FileUtil.PATH+File.separator+"bbbb.jpg");
+                Bitmap bitmap = BitmapFactory.decodeFile(FileUtil.SDPATH + File.separator + FileUtil.PATH + File.separator + "bbbb.jpg");
                 xianchengzhao.setImageBitmap(bitmap);
 
-
+            }
 
             }
         }
@@ -924,7 +926,7 @@ public class XinJiangActivity extends Activity {
                 .add("organ",userInfoBena.getCertOrg())
                 .add("termStart",userInfoBena.getEffDate())
                 .add("termEnd",userInfoBena.getExpDate())
-                .add("accountId",jiuDianBean.getId())
+                .add("accountId",baoCunBean.getHuiyiId())
                 .add("result",biduijieguo)
                 .add("homeNumber",fanghao.getText().toString().trim())
                 .add("phone",dianhua.getText().toString().trim())

@@ -129,14 +129,14 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 	int mCameraID;
 	int mCameraRotate;
 	boolean mCameraMirror;
-	byte[] mImageNV21 = null;
+//	byte[] mImageNV21 = null;
 	//FRAbsLoop mFRAbsLoop = null;
-	AFT_FSDKFace mAFT_FSDKFace = null;
+//	AFT_FSDKFace mAFT_FSDKFace = null;
 	Handler mHandler;
 	//private RecyclerView recyclerView2;
 	//private WrapContentLinearLayoutManager manager2;
 	private BlockingQueue<String> basket = new LinkedBlockingQueue<String>(3);
-	private BlockingQueue<String> maxBasket = new LinkedBlockingQueue<String>(6);
+	//private BlockingQueue<String> maxBasket = new LinkedBlockingQueue<String>(6);
 	//private static Vector<Call> callsList=new Vector<>();
 	private ImageView zhengjianzhao;
 	private static boolean isA=true;
@@ -302,9 +302,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 		String paths=getIntent().getStringExtra("shengfenzhengPath");
 		maxCount=1;
 		 baoCunBean=baoCunBeanDao.load(123456L);
-		if (baoCunBean!=null){
-			link_P1(paths);
-		}
+
 		userInfoBena=userInfoBenaDao.load(123456L);
 
 		mCameraID = getIntent().getIntExtra("Camera", 0) == 0 ? Camera.CameraInfo.CAMERA_FACING_BACK : Camera.CameraInfo.CAMERA_FACING_FRONT;
@@ -313,16 +311,16 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 
 		Intent intent=new Intent("shoudongshuaxin");
 		getApplication().sendBroadcast(intent);
-		try {
-			maxBasket.put("aaaa");
-			maxBasket.put("aaaa");
-			maxBasket.put("aaaa");
-			maxBasket.put("aaaa");
-			maxBasket.put("aaaa");
-			maxBasket.put("aaaa");
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			maxBasket.put("aaaa");
+//			maxBasket.put("aaaa");
+//			maxBasket.put("aaaa");
+//			maxBasket.put("aaaa");
+//			maxBasket.put("aaaa");
+//			maxBasket.put("aaaa");
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		mFormat = ImageFormat.NV21;
 		mHandler = new Handler(new Handler.Callback() {
 			@Override
@@ -373,6 +371,10 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 		Log.d(TAG, "ASGE_FSDK_InitgGenderEngine =" + error1.getCode());
 		error1 = mGenderEngine.ASGE_FSDK_GetVersion(mGenderVersion);
 		Log.d(TAG, "ASGE_FSDK_GetVersion:" + mGenderVersion.toString() + "," + error1.getCode());
+
+		if (baoCunBean!=null){
+			link_P1(paths);
+		}
 
 //		RelativeLayout.LayoutParams  params1= (RelativeLayout.LayoutParams) recyclerView2.getLayoutParams();
 //		params1.height=dh*2/3;
@@ -461,6 +463,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 	protected void onStop() {
 		isA=true;
 		faceSize=1;
+		maxCount=1;
 		super.onStop();
 
 	}
@@ -763,6 +766,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
+						if (!DetecterActivity.this.isDestroyed())
 						tishi.setText("上传图片出错,请返回后重试！");
 					}
 				});
@@ -789,6 +793,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
+							if (!DetecterActivity.this.isDestroyed())
 							tishi.setText("上传图片出错,请返回后重试！");
 						}
 					});
@@ -850,6 +855,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
+						if (!DetecterActivity.this.isDestroyed())
 						tishi.setText("上传图片出错，请返回后重试！");
 					}
 				});
@@ -879,6 +885,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
+							if (!DetecterActivity.this.isDestroyed())
 							tishi.setText("上传图片出错，请返回后重试！");
 						}
 					});
