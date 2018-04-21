@@ -22,7 +22,7 @@ public class ShouYeActivity extends Activity {
             @Override
             public void onClick(View v) {
                 imageView.setClickable(false);
-                startActivityForResult(new Intent(ShouYeActivity.this, InFoActivity2.class),2);
+                startActivityForResult(new Intent(ShouYeActivity.this, XinJiangActivity.class),2);
 
                 new Thread(new Runnable() {
                     @Override
@@ -69,7 +69,7 @@ public class ShouYeActivity extends Activity {
                         try {
 
                             Thread.sleep(600);
-                            startActivityForResult(new Intent(ShouYeActivity.this,InFoActivity2.class),2);
+                            startActivityForResult(new Intent(ShouYeActivity.this,XinJiangActivity.class),2);
 
                         } catch (InterruptedException e) {
                             e.printStackTrace();

@@ -2,22 +2,19 @@ package com.camera.simplewebcam.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.anupcowkur.reservoir.Reservoir;
-import com.anupcowkur.reservoir.ReservoirGetCallback;
 import com.camera.simplewebcam.MyAppLaction;
 import com.camera.simplewebcam.R;
+import com.camera.simplewebcam.beans.BaoCunBean;
+import com.camera.simplewebcam.beans.BaoCunBeanDao;
 import com.camera.simplewebcam.beans.JiuDianBean;
-import com.google.gson.reflect.TypeToken;
-import com.sdsmdg.tastytoast.TastyToast;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
+
 import java.net.URLEncoder;
 
 public class ChaXunActivity extends Activity {
@@ -25,10 +22,13 @@ public class ChaXunActivity extends Activity {
     private TextView title;
     private ImageView famhui;
     private JiuDianBean jiuDianBean=null;
+    private BaoCunBeanDao baoCunBeanDao=MyAppLaction.context.getDaoSession().getBaoCunBeanDao();
+    private BaoCunBean baoCunBean=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        baoCunBean=baoCunBeanDao.load(123456L);
         setContentView(R.layout.activity_cha_xun);
         webView= (WebView) findViewById(R.id.webwiew);
 
@@ -79,45 +79,26 @@ public class ChaXunActivity extends Activity {
 
             }
         });
+        if (baoCunBean!=null){
+            if (baoCunBean.getZhujiDiZhi()!=null && baoCunBean.getGuanggaojiMing()!=null)
+            {
+                String str =baoCunBean.getGuanggaojiMing(); //默认环境，已是UTF-8编码
+                String strGBK = null;
+                try {
+                    strGBK = URLEncoder.encode(str,"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
 
+                }
+                webView.loadUrl(baoCunBean.getZhujiDiZhi()+"/police/ipad.html?accountName="+strGBK);
+            }
+
+        }
 
 
         //    http://192.168.2.101:8081/Police/ipad.html?accountName=%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E5%91%98
 //            String strUTF8 = URLDecoder.decode(str, "UTF-8");
 //            System.out.println(strUTF8);
-
-            Type resultType2 = new TypeToken<String>() {
-            }.getType();
-            Reservoir.getAsync("zhuji", resultType2, new ReservoirGetCallback<String>() {
-                @Override
-                public void onSuccess(final String i) {
-                    String str =jiuDianBean.getName(); //默认环境，已是UTF-8编码
-                    String strGBK = null;
-                    try {
-                        strGBK = URLEncoder.encode(str,"UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-
-                    }
-                   // System.out.println(strGBK);
-
-                    webView.loadUrl(i+"/police/ipad.html?accountName="+strGBK);
-
-                }
-
-                @Override
-                public void onFailure(final Exception e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            TastyToast.makeText(ChaXunActivity.this,e.getMessage(),TastyToast.LENGTH_LONG,TastyToast.INFO).show();
-                        }
-                    });
-
-                }
-
-            });
-
 
     }
 }

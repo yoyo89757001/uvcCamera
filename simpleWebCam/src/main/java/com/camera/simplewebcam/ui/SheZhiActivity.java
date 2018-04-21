@@ -10,7 +10,10 @@ import android.widget.TextView;
 import com.anupcowkur.reservoir.Reservoir;
 import com.anupcowkur.reservoir.ReservoirGetCallback;
 import com.anupcowkur.reservoir.ReservoirPutCallback;
+import com.camera.simplewebcam.MyAppLaction;
 import com.camera.simplewebcam.R;
+import com.camera.simplewebcam.beans.BaoCunBean;
+import com.camera.simplewebcam.beans.BaoCunBeanDao;
 import com.camera.simplewebcam.beans.JiuDianBean;
 import com.camera.simplewebcam.dialog.XiuGaiJiuDianDialog;
 import com.camera.simplewebcam.dialog.XiuGaiXinXiDialog;
@@ -26,58 +29,22 @@ public class SheZhiActivity extends Activity {
     private String ip=null;
     private String zhuji=null;
     private JiuDianBean jiuDianBean=null;
+    private BaoCunBeanDao baoCunBeanDao= MyAppLaction.context.getDaoSession().getBaoCunBeanDao();
+    private BaoCunBean baoCunBean=null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_she_zhi);
-        Type resultType = new TypeToken<String>() {
-        }.getType();
-        Reservoir.getAsync("ipipip", resultType, new ReservoirGetCallback<String>() {
-            @Override
-            public void onSuccess(final String i) {
-                ip=i;
-
-             }
-
-        @Override
-        public void onFailure(Exception e) {
+        baoCunBean=baoCunBeanDao.load(123456L);
+        if (baoCunBean==null){
+            baoCunBean=new BaoCunBean();
+            baoCunBean.setId(123456L);
+            baoCunBean.setZhujiDiZhi("http://183.63.123.53:8090");
 
         }
+        setContentView(R.layout.activity_she_zhi);
 
-     });
-        Type resultType3 = new TypeToken<String>() {
-        }.getType();
-        Reservoir.getAsync("jiudian", resultType3, new ReservoirGetCallback<JiuDianBean>() {
-            @Override
-            public void onSuccess(final JiuDianBean i) {
-                jiuDianBean=i;
-
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-
-            }
-
-        });
-
-        Type resultType2 = new TypeToken<String>() {
-        }.getType();
-        Reservoir.getAsync("zhuji", resultType2, new ReservoirGetCallback<String>() {
-            @Override
-            public void onSuccess(final String i) {
-                zhuji=i;
-
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                zhuji="http://183.63.123.53:8090";
-            }
-
-        });
 
         zhuji2= (Button) findViewById(R.id.zhuji);
         zhuji2.setOnClickListener(new View.OnClickListener() {
@@ -87,23 +54,11 @@ public class SheZhiActivity extends Activity {
                 dialog.setOnQueRenListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        Reservoir.putAsync("zhuji",dialog.getContents(), new ReservoirPutCallback() {
-                            @Override
-                            public void onSuccess() {
-                                TastyToast.makeText(SheZhiActivity.this,"保存成功",TastyToast.LENGTH_LONG,TastyToast.INFO).show();
-                                dialog.dismiss();
-                            }
-
-                            @Override
-                            public void onFailure(Exception e) {
-                                TastyToast.makeText(SheZhiActivity.this,"保存失败",TastyToast.LENGTH_LONG,TastyToast.INFO).show();
-                                dialog.dismiss();
-                            }
-                        });
+                        baoCunBean.setZhujiDiZhi(dialog.getContents());
+                        baoCunBeanDao.update(baoCunBean);
+                        dialog.dismiss();
 
                     }
-
 
                 });
                 dialog.setQuXiaoListener(new View.OnClickListener() {
@@ -112,8 +67,8 @@ public class SheZhiActivity extends Activity {
                         dialog.dismiss();
                     }
                 });
-                if (zhuji!=null){
-                    dialog.setContents("设置主机地址",zhuji);
+                if (baoCunBean.getZhujiDiZhi()!=null){
+                    dialog.setContents("设置主机地址",baoCunBean.getZhujiDiZhi());
                 }
                 dialog.show();
             }
@@ -193,21 +148,10 @@ public class SheZhiActivity extends Activity {
                 dianDialog.setOnQueRenListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        Reservoir.putAsync("jiudian",dianDialog.getJiuDianBean(), new ReservoirPutCallback() {
-                            @Override
-                            public void onSuccess() {
-                                TastyToast.makeText(SheZhiActivity.this,"保存成功",TastyToast.LENGTH_LONG,TastyToast.INFO).show();
-                                dianDialog.dismiss();
-                            }
-
-                            @Override
-                            public void onFailure(Exception e) {
-                                TastyToast.makeText(SheZhiActivity.this,"保存失败",TastyToast.LENGTH_LONG,TastyToast.INFO).show();
-                                dianDialog.dismiss();
-                            }
-                        });
-
+                        baoCunBean.setHuiyiId(dianDialog.getJiuDianBean().getId());
+                        baoCunBean.setGuanggaojiMing(dianDialog.getJiuDianBean().getName());
+                        baoCunBeanDao.update(baoCunBean);
+                        dianDialog.dismiss();
 
                     }
                 });
@@ -217,8 +161,8 @@ public class SheZhiActivity extends Activity {
                         dianDialog.dismiss();
                     }
                 });
-                if (jiuDianBean!=null){
-                    dianDialog.setContents(jiuDianBean.getId(),jiuDianBean.getName());
+                if (baoCunBean.getHuiyiId()!=null && baoCunBean.getGuanggaojiMing()!=null){
+                    dianDialog.setContents(baoCunBean.getHuiyiId(),baoCunBean.getGuanggaojiMing());
                 }
                 dianDialog.show();
 

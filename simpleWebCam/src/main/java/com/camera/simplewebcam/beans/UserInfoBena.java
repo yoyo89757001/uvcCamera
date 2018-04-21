@@ -1,10 +1,19 @@
 package com.camera.simplewebcam.beans;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.NotNull;
+import org.greenrobot.greendao.annotation.Generated;
+
 /**
  * Created by Administrator on 2017/6/21.
  */
 
+@Entity
 public class UserInfoBena {
+    @Id
+    @NotNull
+    private Long id;
     private String partyName;
     private String gender;
     private String nation;
@@ -34,6 +43,24 @@ public class UserInfoBena {
     }
 
     public UserInfoBena() {
+    }
+
+    @Generated(hash = 1231095440)
+    public UserInfoBena(@NotNull Long id, String partyName, String gender, String nation, String bornDay, String certAddress, String certNumber, String certOrg, String effDate, String expDate, String cardPhoto, String scanPhoto,
+            String type) {
+        this.id = id;
+        this.partyName = partyName;
+        this.gender = gender;
+        this.nation = nation;
+        this.bornDay = bornDay;
+        this.certAddress = certAddress;
+        this.certNumber = certNumber;
+        this.certOrg = certOrg;
+        this.effDate = effDate;
+        this.expDate = expDate;
+        this.cardPhoto = cardPhoto;
+        this.scanPhoto = scanPhoto;
+        this.type = type;
     }
 
     public String getPartyName() {
@@ -138,5 +165,13 @@ public class UserInfoBena {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

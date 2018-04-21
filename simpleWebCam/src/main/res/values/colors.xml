@@ -235,4 +235,7 @@
     <color name="dark_grey">#D2D2D2</color><!-- 深灰 -->
     <color name="wxnavpage">#FFE1E8EB</color>
 
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+
 </resources>

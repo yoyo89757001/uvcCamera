@@ -318,8 +318,13 @@ public class InFoActivity2 extends Activity {
 
                                 strTmp = strRfidCardArray[3];
                                 String kaishi=strTmp.substring(0,4)+"-"+strTmp.substring(4,6)+"-"+strTmp.substring(6,8);
+                                String jieshu="";
+                                if (strTmp.length()>=15){
+                                     jieshu=strTmp.substring(8,12)+"-"+strTmp.substring(12,14)+"-"+strTmp.substring(14,16);
 
-                                String jieshu=strTmp.substring(8,12)+"-"+strTmp.substring(12,14)+"-"+strTmp.substring(14,16);
+                                }else {
+                                    jieshu="长期";
+                                }
 
                                 youxiaoqixian.setText(kaishi+" 至 "+jieshu);
                                 userInfoBena.setEffDate(kaishi);
@@ -983,60 +988,58 @@ public class InFoActivity2 extends Activity {
              //   Log.d("AllConnects", "请求识别成功"+call.request().toString());
                 //获得返回体
                 try {
+                    if (isBaoCun) {
+                        ResponseBody body = response.body();
+                        String ss = body.string().trim();
+                        //   Log.d("InFoActivity", "ss" + ss);
+                        if (ss.contains("1")) {
 
-                    ResponseBody body = response.body();
-                    String ss=body.string().trim();
-                 //   Log.d("InFoActivity", "ss" + ss);
-                    if (ss.contains("1")){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
 
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+                                    Toast tastyToast = TastyToast.makeText(InFoActivity2.this, "保存成功", TastyToast.LENGTH_LONG, TastyToast.INFO);
+                                    tastyToast.setGravity(Gravity.CENTER, 0, 0);
+                                    tastyToast.show();
 
-                                Toast tastyToast= TastyToast.makeText(InFoActivity2.this,"保存成功",TastyToast.LENGTH_LONG,TastyToast.INFO);
-                                tastyToast.setGravity(Gravity.CENTER,0,0);
-                                tastyToast.show();
+                                }
+                            });
 
-                            }
-                        });
+                            finish();
+                        } else if (ss.equals("这个是黑名单")) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
 
-                        finish();
-                    }else  if (ss.equals("这个是黑名单")) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+                                    final QueRenDialog dialog = new QueRenDialog(InFoActivity2.this, "请注意,这个是黑名单!");
+                                    dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
+                                    dialog.setOnPositiveListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialog.dismiss();
+                                            finish();
+                                        }
+                                    });
+                                    dialog.show();
+                                }
+                            });
 
-                                final QueRenDialog dialog=new QueRenDialog(InFoActivity2.this,"请注意,这个是黑名单!");
-                                dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
-                                dialog.setOnPositiveListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        dialog.dismiss();
-                                        finish();
-                                    }
-                                });
-                                dialog.show();
-                            }
-                        });
+                        } else {
 
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    Toast tastyToast = TastyToast.makeText(InFoActivity2.this, "保存失败", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                                    tastyToast.setGravity(Gravity.CENTER, 0, 0);
+                                    tastyToast.show();
+
+                                }
+                            });
+                            finish();
+
+                        }
                     }
-
-                      else {
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                Toast tastyToast= TastyToast.makeText(InFoActivity2.this,"保存失败",TastyToast.LENGTH_LONG,TastyToast.ERROR);
-                                tastyToast.setGravity(Gravity.CENTER,0,0);
-                                tastyToast.show();
-
-                            }
-                        });
-                        finish();
-
-                    }
-
                 }catch (Exception e){
 
                     if (tiJIaoDialog!=null){

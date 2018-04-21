@@ -32,7 +32,6 @@
         <com.camera.simplewebcam.view.MyEditText
             android:textColor="@color/textcolor"
             android:textSize="14sp"
-            android:text="192.166.2.56"
             android:background="@null"
             android:gravity="center"
             android:id="@+id/xiangce"
