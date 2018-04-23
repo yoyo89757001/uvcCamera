@@ -2,6 +2,7 @@ package com.camera.simplewebcam.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -80,17 +81,18 @@ public class ChaXunActivity extends Activity {
             }
         });
         if (baoCunBean!=null){
-            if (baoCunBean.getZhujiDiZhi()!=null && baoCunBean.getGuanggaojiMing()!=null)
+            if (baoCunBean.getZhujiDiZhi()!=null && baoCunBean.getHuiyiId()!=null)
             {
-                String str =baoCunBean.getGuanggaojiMing(); //默认环境，已是UTF-8编码
-                String strGBK = null;
-                try {
-                    strGBK = URLEncoder.encode(str,"UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+//                String str =baoCunBean.getGuanggaojiMing(); //默认环境，已是UTF-8编码
+//                String strGBK = null;
+//                try {
+//                    strGBK = URLEncoder.encode(str,"UTF-8");
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
+             Log.d("ChaXunActivity", baoCunBean.getZhujiDiZhi() + "/police/ipad.html?accountId=" + baoCunBean.getHuiyiId());
 
-                }
-                webView.loadUrl(baoCunBean.getZhujiDiZhi()+"/police/ipad.html?accountName="+strGBK);
+                webView.loadUrl(baoCunBean.getZhujiDiZhi()+"/police/ipad.html?accountId="+baoCunBean.getHuiyiId());
             }
 
         }

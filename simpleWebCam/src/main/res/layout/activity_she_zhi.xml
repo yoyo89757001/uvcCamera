@@ -131,7 +131,7 @@
         <TextView
             android:textColor="@color/sbc_header_text"
             android:textSize="18sp"
-            android:text="中国电信"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

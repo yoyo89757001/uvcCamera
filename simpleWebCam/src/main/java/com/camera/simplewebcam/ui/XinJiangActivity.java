@@ -1,50 +1,41 @@
 package com.camera.simplewebcam.ui;
 
 
-import android.animation.ObjectAnimator;
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
-import com.anupcowkur.reservoir.Reservoir;
-import com.anupcowkur.reservoir.ReservoirGetCallback;
+import com.bumptech.glide.Glide;
 import com.camera.simplewebcam.MyAppLaction;
 import com.camera.simplewebcam.R;
 import com.camera.simplewebcam.beans.BaoCunBean;
 import com.camera.simplewebcam.beans.BaoCunBeanDao;
-import com.camera.simplewebcam.beans.JiuDianBean;
-import com.camera.simplewebcam.beans.Photos;
-import com.camera.simplewebcam.beans.ShiBieBean;
 import com.camera.simplewebcam.beans.UserInfoBena;
 import com.camera.simplewebcam.beans.UserInfoBenaDao;
 import com.camera.simplewebcam.dialog.JiaZaiDialog;
-import com.camera.simplewebcam.dialog.QueRenDialog;
+
 import com.camera.simplewebcam.dialog.TiJIaoDialog;
 import com.camera.simplewebcam.kaer.BeepManager;
 import com.camera.simplewebcam.utils.AppendAPI;
 import com.camera.simplewebcam.utils.FileUtil;
-import com.camera.simplewebcam.utils.GsonUtil;
+
 import com.camera.simplewebcam.view.AutoFitTextureView;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.kaeridcard.tools.Tool;
 import com.lzw.qlhs.Wlt2bmp;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -53,7 +44,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Type;
+
 import java.util.Arrays;
 
 import java.util.concurrent.TimeUnit;
@@ -63,8 +54,6 @@ import java.util.regex.Pattern;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -95,12 +84,12 @@ public class XinJiangActivity extends Activity {
 //    private IVLCVout.Callback callback;
 //    private LibVLC libvlc;
 //    private Media media;
-    private static int cishu=0;
+//    private static int cishu=0;
 //    private static boolean isTrue=true;
 //    private static boolean isTrue2=true;
-    private static boolean isTrue3=true;
-    private static boolean isTrue4=true;
-    private Bitmap bitmapBig=null;
+   // private static boolean isTrue3=true;
+   // private static boolean isTrue4=true;
+   // private Bitmap bitmapBig=null;
     private ImageView imageView;
  //   private int numberOfFace = 4;       //最大检测的人脸数
   //  private FaceDetector myFaceDetect;  //人脸识别类的实例
@@ -108,7 +97,7 @@ public class XinJiangActivity extends Activity {
    // int myEyesDistance;           //两眼之间的距离
   //  int numberOfFaceDetected=0;       //实际检测到的人脸数
     private static final int MESSAGE_QR_SUCCESS = 1;
-    private static int count=1;
+   // private static int count=1;
     private UserInfoBenaDao userInfoBenaDao=MyAppLaction.context.getDaoSession().getUserInfoBenaDao();
     private UserInfoBena userInfoBena=null;
     private SensorInfoReceiver sensorInfoReceiver;
@@ -116,11 +105,11 @@ public class XinJiangActivity extends Activity {
 //    private String filePath2=null;
 //    private File file1=null;
 //    private File file2=null;
-    private  String ip=null;
+  //  private  String ip=null;
     private AutoFitTextureView videoView;
     long c=0;
     private String shengfenzhengPath=null;
-    private LinearLayout jiemian;
+   // private LinearLayout jiemian;
   //  private RelativeLayout shipingRL;
 //    private float    mRelativeFaceSize   = 0.2f;
 //    private int      mAbsoluteFaceSize   = 0;
@@ -134,9 +123,9 @@ public class XinJiangActivity extends Activity {
     private int iInit;
     private byte[] cardinfo = new byte[256 * 8 + 1024];
    // private FaceDet mFaceDet;
-    private  String zhuji=null;
-    private  JiuDianBean jiuDianBean=null;
-    private boolean isBaoCun=false;
+   // private  String zhuji=null;
+   // private  JiuDianBean jiuDianBean=null;
+   // private boolean isBaoCun=false;
     private BaoCunBeanDao baoCunBeanDao=MyAppLaction.context.getDaoSession().getBaoCunBeanDao();
     private BaoCunBean baoCunBean=null;
   //  private boolean isReadCard=false;
@@ -191,14 +180,14 @@ public class XinJiangActivity extends Activity {
         baoCunBean=baoCunBeanDao.load(123456L);
 
         //mFaceDet= MyAppLaction.mFaceDet;
-        ip=MyAppLaction.sip;
-        jiuDianBean=MyAppLaction.jiuDianBean;
+     //   ip=MyAppLaction.sip;
+       // jiuDianBean=MyAppLaction.jiuDianBean;
 
 
-        isTrue3=true;
-        isTrue4=true;
+       // isTrue3=true;
+       // isTrue4=true;
 
-        cishu=0;
+        //cishu=0;
 
         strSex[0] = "未知";
         strSex[1] = "男";
@@ -371,7 +360,7 @@ public class XinJiangActivity extends Activity {
         videoView.setAspectRatio(4,3);
         imageView= (ImageView) findViewById(R.id.ffff);
 
-        jiemian= (LinearLayout) findViewById(R.id.jiemian);
+        //jiemian= (LinearLayout) findViewById(R.id.jiemian);
         //shipingRL= (RelativeLayout) findViewById(R.id.shiping_rl);
 
 //        libvlc= LibVLCUtil.getLibVLC(XinJiangActivity.this);
@@ -463,15 +452,16 @@ public class XinJiangActivity extends Activity {
 
         _beepManager = new BeepManager(XinJiangActivity.this);
 
-        jiaZaiDialog=new JiaZaiDialog(XinJiangActivity.this);
-        jiaZaiDialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
-        jiaZaiDialog.show();
-        if (baoCunBean==null){
+        if (baoCunBean==null || baoCunBean.getHuiyiId()==null || baoCunBean.getHuiyiId().equals("")){
             Toast tastyToast= TastyToast.makeText(XinJiangActivity.this,"请先设置主机地址",TastyToast.LENGTH_LONG,TastyToast.ERROR);
             tastyToast.setGravity(Gravity.CENTER,0,0);
             tastyToast.show();
-            Log.d("XinJiangActivity", "ddddddddddd");
+           // Log.d("XinJiangActivity", "ddddddddddd");
+            return;
         }
+        jiaZaiDialog=new JiaZaiDialog(XinJiangActivity.this);
+        jiaZaiDialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
+        jiaZaiDialog.show();
         connectDevice();
     }
 
@@ -491,9 +481,9 @@ public class XinJiangActivity extends Activity {
                 ReadRfidCardThread readSimCardThread = new ReadRfidCardThread();
                 readSimCardThread.run();
 
-                Log.d("ReadRfidCardThread", "再读卡1");
+               // Log.d("ReadRfidCardThread", "再读卡1");
             } else {
-                Log.d("ReadRfidCardThread", "再读卡");
+              //  Log.d("ReadRfidCardThread", "再读卡");
                 handlerGongGao.postDelayed(runnableGongGao, 1200);//4秒后再次执行
             }
         }
@@ -505,7 +495,7 @@ public class XinJiangActivity extends Activity {
         try {
 
             handlerGongGao.postDelayed(runnableGongGao,800);//4秒后再次执行
-            Log.d("ReadRfidCardThread", "再读卡3");
+           // Log.d("ReadRfidCardThread", "再读卡3");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -522,7 +512,7 @@ public class XinJiangActivity extends Activity {
 
         @Override
         public void run() {
-            Log.d("ReadRfidCardThread", "读卡");
+          //  Log.d("ReadRfidCardThread", "读卡");
 
                 Arrays.fill(cardinfo, (byte) 32);
                 short[] len = new short[4];
@@ -530,7 +520,7 @@ public class XinJiangActivity extends Activity {
                         cardinfo, len);
 
                 if (iCardRead == -1) {
-                    Log.d("ReadRfidCardThread", "搜寻设备失败");
+                  //  Log.d("ReadRfidCardThread", "搜寻设备失败");
 //                    Toast tastyToast= TastyToast.makeText(XinJiangActivity.this,"读取信息失败！因身份证磁性较弱,再次读取中...",TastyToast.LENGTH_LONG,TastyToast.ERROR);
 //                    tastyToast.setGravity(Gravity.CENTER,0,0);
 //                    tastyToast.show();
@@ -548,7 +538,7 @@ public class XinJiangActivity extends Activity {
                     strMsg3 = "用户取消身份证识别！";
                     //Toast.makeText(ywclActivity, "用户取消身份证识别！", Toast.LENGTH_SHORT).show();
                 } else if (iCardRead == 1) {
-                    Log.d("ReadRfidCardThread", "读卡成功");
+                //    Log.d("ReadRfidCardThread", "读卡成功");
 
                     if (myJni!=null){
                         myJni.Mini_release();
@@ -621,12 +611,11 @@ public class XinJiangActivity extends Activity {
     public class ToastShow {
         private Context context;
         private Toast toast = null;
-        public ToastShow(Context context) {
+        private ToastShow(Context context) {
             this.context = context;
 
         }
-        public void toastShow(String text) {
-
+        private void toastShow(String text) {
 
                 toast = TastyToast.makeText(XinJiangActivity.this,text,TastyToast.LENGTH_LONG,TastyToast.INFO);
                 toast.setGravity(Gravity.CENTER,0,0);
@@ -688,7 +677,7 @@ public class XinJiangActivity extends Activity {
 
                 if (!userInfoBena.getCertNumber().equals("")){
                     try {
-                        isBaoCun=true;
+                       // isBaoCun=true;
                         link_save();
 
                     }catch (Exception e){
@@ -736,17 +725,32 @@ public class XinJiangActivity extends Activity {
                     biduijieguo = "比对通过";
                     quxiao.setVisibility(View.GONE);
 
+                    Toast tastyToast= TastyToast.makeText(XinJiangActivity.this,"比对通过",TastyToast.LENGTH_LONG,TastyToast.INFO);
+                    tastyToast.setGravity(Gravity.CENTER,0,0);
+                    tastyToast.show();
+
                 } else {
                     shibiejieguo.setText("比对不通过");
                     biduijieguo = "比对不通过";
                     quxiao.setVisibility(View.VISIBLE);
+                    Toast tastyToast= TastyToast.makeText(XinJiangActivity.this,"比对失败",TastyToast.LENGTH_LONG,TastyToast.ERROR);
+                    tastyToast.setGravity(Gravity.CENTER,0,0);
+                    tastyToast.show();
 
                 }
                 xiangsi = intent.getStringExtra("xiangsidu");
-                xiangsifdu.setText(intent.getStringExtra("xiangsidu") + "");
-
-                Bitmap bitmap = BitmapFactory.decodeFile(FileUtil.SDPATH + File.separator + FileUtil.PATH + File.separator + "bbbb.jpg");
-                xianchengzhao.setImageBitmap(bitmap);
+                xiangsifdu.setText(intent.getStringExtra("xiangsidu")+"");
+              //  Log.d("SensorInfoReceiver", baoCunBean.getZhanghuId() + "/upload/scan/" + userInfoBena.getScanPhoto());
+                if (baoCunBean.getZhujiDiZhi()!=null)
+                Glide.with(XinJiangActivity.this)
+                        .load(baoCunBean.getZhujiDiZhi()+"/upload/scan/"+userInfoBena.getScanPhoto())
+                        //.load("http://121.46.3.20"+item.getTouxiang())
+                        //.apply(myOptions)
+                    //    .transform(new GlideCircleTransform(MyApplication.getAppContext(),2, Color.parseColor("#ffffffff")))
+                        //	.bitmapTransform(new GrayscaleTransformation(VlcVideoActivity.this))
+                        .into(xianchengzhao);
+//                Bitmap bitmap = BitmapFactory.decodeFile(FileUtil.SDPATH + File.separator + FileUtil.PATH + File.separator + "bbbb.jpg");
+//                xianchengzhao.setImageBitmap(bitmap);
 
             }
 
@@ -848,11 +852,11 @@ public class XinJiangActivity extends Activity {
 
     //    Log.d("InFoActivity2", "暂停");
 
-        count=1;
+    //    count=1;
 
-        isTrue4=false;
-        isTrue3=false;
-        cishu=0;
+      //  isTrue4=false;
+       // //isTrue3=false;
+       // cishu=0;
 
         if (myJni!=null){
             myJni.Mini_release();
@@ -937,7 +941,7 @@ public class XinJiangActivity extends Activity {
         Request.Builder requestBuilder = new Request.Builder()
                 // .header("Content-Type", "application/json")
                 .post(body)
-                .url(zhuji + "/saveCompareResult.do");
+                .url(baoCunBean.getZhujiDiZhi() + "/saveCompareResult.do");
 
         if (!XinJiangActivity.this.isFinishing() && tiJIaoDialog==null  ){
             tiJIaoDialog=new TiJIaoDialog(XinJiangActivity.this);
@@ -965,10 +969,9 @@ public class XinJiangActivity extends Activity {
              //   Log.d("AllConnects", "请求识别成功"+call.request().toString());
                 //获得返回体
                 try {
-                    if (isBaoCun) {
                         ResponseBody body = response.body();
                         String ss = body.string().trim();
-                        //   Log.d("InFoActivity", "ss" + ss);
+                           Log.d("InFoActivity", "保存" + ss);
                         if (ss.contains("1")) {
 
                             runOnUiThread(new Runnable() {
@@ -983,25 +986,27 @@ public class XinJiangActivity extends Activity {
                             });
 
                             finish();
-                        } else if (ss.equals("这个是黑名单")) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    final QueRenDialog dialog = new QueRenDialog(XinJiangActivity.this, "请注意,这个是黑名单!");
-                                    dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
-                                    dialog.setOnPositiveListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            dialog.dismiss();
-                                            finish();
-                                        }
-                                    });
-                                    dialog.show();
-                                }
-                            });
-
-                        } else {
+                        }
+//                        else if (ss.equals("这个是黑名单")) {
+//                            runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//
+//                                    final QueRenDialog dialog = new QueRenDialog(XinJiangActivity.this, "请注意,这个是黑名单!");
+//                                    dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
+//                                    dialog.setOnPositiveListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            dialog.dismiss();
+//                                            finish();
+//                                        }
+//                                    });
+//                                    dialog.show();
+//                                }
+//                            });
+//
+//                        }
+                        else {
 
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -1016,7 +1021,7 @@ public class XinJiangActivity extends Activity {
                             finish();
 
                         }
-                    }
+
                 }catch (Exception e){
 
                     if (tiJIaoDialog!=null){

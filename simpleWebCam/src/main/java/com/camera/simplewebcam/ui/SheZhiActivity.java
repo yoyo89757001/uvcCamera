@@ -40,7 +40,7 @@ public class SheZhiActivity extends Activity {
         if (baoCunBean==null){
             baoCunBean=new BaoCunBean();
             baoCunBean.setId(123456L);
-            baoCunBean.setZhujiDiZhi("http://183.63.123.53:8090");
+            baoCunBean.setZhujiDiZhi("http://14.18.242.76:8092");
 
         }
         setContentView(R.layout.activity_she_zhi);

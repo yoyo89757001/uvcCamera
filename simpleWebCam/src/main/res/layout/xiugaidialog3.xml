@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/title2"
-            android:text="修改酒店信息"
+            android:text="修改酒店信息(请勿随意修改id)"
             android:textSize="18sp"
             android:layout_weight="0.8"
             android:gravity="center"
@@ -43,7 +43,7 @@
     <EditText
         android:textColor="@color/textcolor"
         android:textSize="14sp"
-        android:text="10000432"
+        android:text="10000502"
         android:paddingLeft="16dp"
         android:background="@null"
         android:gravity="center_vertical"
@@ -72,7 +72,7 @@
             <EditText
                 android:textColor="@color/textcolor"
                 android:textSize="14sp"
-                android:text="一呆酒店"
+                android:hint="随意填写"
                 android:paddingLeft="16dp"
                 android:background="@null"
                 android:gravity="center_vertical"

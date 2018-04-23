@@ -27,25 +27,22 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.arcsoft.ageestimation.ASAE_FSDKAge;
+
 import com.arcsoft.ageestimation.ASAE_FSDKEngine;
 import com.arcsoft.ageestimation.ASAE_FSDKError;
-import com.arcsoft.ageestimation.ASAE_FSDKFace;
+
 import com.arcsoft.ageestimation.ASAE_FSDKVersion;
-import com.arcsoft.facerecognition.AFR_FSDKEngine;
-import com.arcsoft.facerecognition.AFR_FSDKError;
-import com.arcsoft.facerecognition.AFR_FSDKFace;
-import com.arcsoft.facerecognition.AFR_FSDKVersion;
+
 import com.arcsoft.facetracking.AFT_FSDKEngine;
 import com.arcsoft.facetracking.AFT_FSDKError;
 import com.arcsoft.facetracking.AFT_FSDKFace;
 import com.arcsoft.facetracking.AFT_FSDKVersion;
 import com.arcsoft.genderestimation.ASGE_FSDKEngine;
 import com.arcsoft.genderestimation.ASGE_FSDKError;
-import com.arcsoft.genderestimation.ASGE_FSDKFace;
+
 import com.arcsoft.genderestimation.ASGE_FSDKGender;
 import com.arcsoft.genderestimation.ASGE_FSDKVersion;
-import com.bumptech.glide.Glide;
+
 import com.camera.simplewebcam.MyAppLaction;
 import com.camera.simplewebcam.R;
 import com.camera.simplewebcam.beans.BaoCunBean;
@@ -57,14 +54,14 @@ import com.camera.simplewebcam.beans.Photos;
 import com.camera.simplewebcam.beans.ShiBieBean;
 import com.camera.simplewebcam.beans.UserInfoBena;
 import com.camera.simplewebcam.beans.UserInfoBenaDao;
-import com.camera.simplewebcam.cookies.CookiesManager;
+
 import com.camera.simplewebcam.interfaces.RecytviewCash;
 import com.camera.simplewebcam.utils.GsonUtil;
 import com.camera.simplewebcam.utils.Utils;
 import com.camera.simplewebcam.view.WrapContentLinearLayoutManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.guo.android_extend.java.AbsLoop;
+
 import com.guo.android_extend.java.ExtByteArrayOutputStream;
 import com.guo.android_extend.tools.CameraHelper;
 import com.guo.android_extend.widget.CameraFrameData;
@@ -82,7 +79,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+
 import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -120,12 +117,12 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 	ASGE_FSDKVersion mGenderVersion = new ASGE_FSDKVersion();
 	ASGE_FSDKEngine mGenderEngine = new ASGE_FSDKEngine();
 	List<AFT_FSDKFace> result = new ArrayList<>();
-	List<AFT_FSDKFace> result2 = new ArrayList<>();
-	List<ASAE_FSDKAge> ages = new ArrayList<>();
+	//List<AFT_FSDKFace> result2 = new ArrayList<>();
+	//List<ASAE_FSDKAge> ages = new ArrayList<>();
 	List<ASGE_FSDKGender> genders = new ArrayList<>();
 	private BaoCunBeanDao baoCunBeanDao=MyAppLaction.context.getDaoSession().getBaoCunBeanDao();
 	private int dw,dh;
-	private OkHttpClient okHttpClient=null;
+//	private OkHttpClient okHttpClient=null;
 	int mCameraID;
 	int mCameraRotate;
 	boolean mCameraMirror;
@@ -140,7 +137,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 	//private static Vector<Call> callsList=new Vector<>();
 	private ImageView zhengjianzhao;
 	private static boolean isA=true;
-	private static int  faceSize=1;
+	//private static int  faceSize=1;
 	private ImagesAdapter adapter;
 	//private ShowAdapter showAdapter;
 	private static boolean isGuanBi=false;
@@ -462,7 +459,6 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 	@Override
 	protected void onStop() {
 		isA=true;
-		faceSize=1;
 		maxCount=1;
 		super.onStop();
 
@@ -797,7 +793,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 							tishi.setText("上传图片出错,请返回后重试！");
 						}
 					});
-					Log.d("WebsocketPushMsg", e.getMessage());
+					Log.d("WebsocketPushMsg", e.getMessage()+"1");
 				}
 			}
 		});
@@ -810,9 +806,9 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 		//final MediaType JSON=MediaType.parse("application/json; charset=utf-8");
 		//http://192.168.2.4:8080/sign?cmd=getUnSignList&subjectId=jfgsdf
 		OkHttpClient okHttpClient= new OkHttpClient.Builder()
-				.writeTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
-				.connectTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
-				.readTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
+				.writeTimeout(TIMEOUT2, TimeUnit.MILLISECONDS)
+				.connectTimeout(TIMEOUT2, TimeUnit.MILLISECONDS)
+				.readTimeout(TIMEOUT2, TimeUnit.MILLISECONDS)
 				.retryOnConnectionFailure(true)
 				.build();
 
@@ -851,7 +847,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 			@Override
 			public void onFailure(Call call, IOException e) {
 				// Log.d("AllConnects", "请求识别失败"+e.getMessage());
-				Log.d("DetecterActivity", "file.delete():" + file.delete());
+				Log.d("DetecterActivity", "file.delete()2:" + file.delete());
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
@@ -889,7 +885,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 							tishi.setText("上传图片出错，请返回后重试！");
 						}
 					});
-					Log.d("WebsocketPushMsg", e.getMessage());
+					Log.d("WebsocketPushMsg", e.getMessage()+"2");
 				}
 			}
 		});
@@ -965,6 +961,14 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 			public void onResponse(Call call, Response response) throws IOException {
 //				Log.d("AllConnects", "请求识别成功"+call.request().toString());
 				//获得返回体
+				if (!DetecterActivity.this.isDestroyed()) {
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							tishi.setText("开始第 "+maxCount+" 次比对");
+						}
+					});
+				}
 				++maxCount;
 				try {
 					ResponseBody body = response.body();
