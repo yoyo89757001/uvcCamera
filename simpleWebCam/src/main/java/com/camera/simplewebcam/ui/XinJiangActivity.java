@@ -35,7 +35,6 @@ import com.camera.simplewebcam.kaer.BeepManager;
 import com.camera.simplewebcam.utils.AppendAPI;
 import com.camera.simplewebcam.utils.FileUtil;
 
-import com.camera.simplewebcam.view.AutoFitTextureView;
 import com.kaeridcard.tools.Tool;
 import com.lzw.qlhs.Wlt2bmp;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -90,7 +89,7 @@ public class XinJiangActivity extends Activity {
    // private static boolean isTrue3=true;
    // private static boolean isTrue4=true;
    // private Bitmap bitmapBig=null;
-    private ImageView imageView;
+   // private ImageView imageView;
  //   private int numberOfFace = 4;       //最大检测的人脸数
   //  private FaceDetector myFaceDetect;  //人脸识别类的实例
   //  private FaceDetector.Face[] myFace; //存储多张人脸的数组变量
@@ -106,7 +105,7 @@ public class XinJiangActivity extends Activity {
 //    private File file1=null;
 //    private File file2=null;
   //  private  String ip=null;
-    private AutoFitTextureView videoView;
+  //  private AutoFitTextureView videoView;
     long c=0;
     private String shengfenzhengPath=null;
    // private LinearLayout jiemian;
@@ -150,7 +149,7 @@ public class XinJiangActivity extends Activity {
                     case MESSAGE_QR_SUCCESS:
 
                         Bitmap bitmap= (Bitmap) msg.obj;
-                        imageView.setImageBitmap(bitmap);
+                       // imageView.setImageBitmap(bitmap);
                         Log.d("InFoActivity", "设置图片");
 
                         break;
@@ -172,7 +171,7 @@ public class XinJiangActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.zhujiemian2);
+        setContentView(R.layout.zhujiemianxx);
         userInfoBenaDao.deleteByKey(123456L);
         userInfoBena=new UserInfoBena();
         userInfoBena.setId(123456L);
@@ -195,12 +194,18 @@ public class XinJiangActivity extends Activity {
 
         toastShow1 = new ToastShow(XinJiangActivity.this);
 
+
+
         new Thread(new Runnable() {
             @Override
             public void run() {
+                try {
                 myJni = JniCall.getInstance();
                  iInit = myJni.Mini_Init(0x01);
 
+                }catch (Exception e){
+                    Log.d("XinJiangActivity", e.getMessage()+"");
+                }
                 // 4.8.4 探测二代证阅读器
                 iDetect = myJni.Mini_idcard_device_detect();
                 if (iDetect == -1) {
@@ -209,9 +214,9 @@ public class XinJiangActivity extends Activity {
                 }
             }
         }).start();
+
+
         // 创建、初始化接口类
-
-
         if (iInit == -1) {
             toastShow1.toastShow("JniCall初始化失败！");
 
@@ -355,9 +360,9 @@ public class XinJiangActivity extends Activity {
         sensorInfoReceiver = new SensorInfoReceiver();
         registerReceiver(sensorInfoReceiver, intentFilter1);
 
-        videoView= (AutoFitTextureView) findViewById(R.id.fff);
-        videoView.setAspectRatio(4,3);
-        imageView= (ImageView) findViewById(R.id.ffff);
+//        videoView= (AutoFitTextureView) findViewById(R.id.fff);
+//        videoView.setAspectRatio(4,3);
+     //   imageView= (ImageView) findViewById(R.id.ffff);
 
         //jiemian= (LinearLayout) findViewById(R.id.jiemian);
         //shipingRL= (RelativeLayout) findViewById(R.id.shiping_rl);
@@ -435,7 +440,6 @@ public class XinJiangActivity extends Activity {
 //
 //                vlcVout.addCallback(callback);
 //                vlcVout.setVideoView(videoView);
-
 
 
         ImageView imageView= (ImageView) findViewById(R.id.dd);

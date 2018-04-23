@@ -10,10 +10,11 @@
         android:layout_height="300dp">
 
         <ProgressBar
-            android:layout_width="80dp"
+            android:layout_width="90dp"
             android:padding="20dp"
+            style="@style/Base.Widget.AppCompat.ProgressBar"
             android:layout_centerInParent="true"
-            android:layout_height="80dp"
+            android:layout_height="90dp"
             android:id="@+id/progressBar" />
 
         <TextView

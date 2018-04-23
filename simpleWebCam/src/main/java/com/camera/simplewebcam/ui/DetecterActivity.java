@@ -323,6 +323,9 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 			face1=false;
 			link_P1(paths);
 		}
+		if (bitmapList.size()>0){
+			bitmapList.clear();
+		}
 		mGLSurfaceView = (CameraGLSurfaceView) findViewById(R.id.glsurfaceView);
 		mGLSurfaceView.setOnTouchListener(this);
 		mSurfaceView = (CameraSurfaceView) findViewById(R.id.surfaceView);
