@@ -173,16 +173,15 @@ public class XinJiangActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.zhujiemian2);
-        userInfoBenaDao.deleteAll();
+        userInfoBenaDao.deleteByKey(123456L);
         userInfoBena=new UserInfoBena();
         userInfoBena.setId(123456L);
         userInfoBenaDao.insert(userInfoBena);
-        baoCunBean=baoCunBeanDao.load(123456L);
+        baoCunBean=baoCunBeanDao.load(12345678L);
 
         //mFaceDet= MyAppLaction.mFaceDet;
      //   ip=MyAppLaction.sip;
        // jiuDianBean=MyAppLaction.jiuDianBean;
-
 
        // isTrue3=true;
        // isTrue4=true;

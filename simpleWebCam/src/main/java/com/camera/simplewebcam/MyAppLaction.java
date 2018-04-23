@@ -1,42 +1,30 @@
 package com.camera.simplewebcam;
 
-import android.app.Application;
-
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
-
-import com.anupcowkur.reservoir.Reservoir;
-
-
-import com.anupcowkur.reservoir.ReservoirGetCallback;
 import com.camera.simplewebcam.beans.DaoMaster;
 import com.camera.simplewebcam.beans.DaoSession;
 import com.camera.simplewebcam.beans.FaceDB;
 import com.camera.simplewebcam.beans.JiuDianBean;
-import com.camera.simplewebcam.utils.CrashHandler;
-import com.google.gson.reflect.TypeToken;
 import com.tzutalin.dlib.Constants;
 import com.tzutalin.dlib.FaceDet;
-import java.io.File;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
+
 
 
 /**
  * Created by Administrator on 2017/7/5.
  */
 
-public class MyAppLaction extends Application{
-    private File mCascadeFile;
+public class MyAppLaction extends MultiDexApplication {
+   // private File mCascadeFile;
     public static FaceDet mFaceDet;
     public static String sip=null;
     public static JiuDianBean jiuDianBean=null;
     FaceDB mFaceDB;
-    Uri mImage;
+   // Uri mImage;
     private DaoMaster.DevOpenHelper mHelper;
     public DaoMaster mDaoMaster;
     public DaoSession mDaoSession;
@@ -70,7 +58,7 @@ public class MyAppLaction extends Application{
 
         try {
             setDatabase();
-            Reservoir.init(this, 900*1024); //in bytes 1M
+//            Reservoir.init(this, 900*1024); //in bytes 1M
 
 //            //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
 //
@@ -137,7 +125,7 @@ public class MyAppLaction extends Application{
         // 可能你已经注意到了，你并不需要去编写「CREATE TABLE」这样的 SQL 语句，因为 greenDAO 已经帮你做了。
         // 注意：默认的 DaoMaster.DevOpenHelper 会在数据库升级时，删除所有的表，意味着这将导致数据的丢失。
         // 所以，在正式的项目中，你还应该做一层封装，来实现数据库的安全升级。
-        mHelper = new DaoMaster.DevOpenHelper(this, "noteukyy", null);
+        mHelper = new DaoMaster.DevOpenHelper(this, "xingjiang", null);
         SQLiteDatabase db = mHelper.getWritableDatabase();
         // 注意：该数据库连接属于 DaoMaster，所以多个 Session 指的是相同的数据库连接。
         mDaoMaster = new DaoMaster(db);

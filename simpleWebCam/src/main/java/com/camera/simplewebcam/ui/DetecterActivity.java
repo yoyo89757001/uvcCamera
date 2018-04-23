@@ -1,7 +1,7 @@
 package com.camera.simplewebcam.ui;
 
 import android.app.Activity;
-import android.app.Application;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,11 +18,11 @@ import android.os.SystemClock;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
+
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
-import android.view.ViewGroup;
+
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,7 +40,6 @@ import com.arcsoft.facetracking.AFT_FSDKVersion;
 import com.arcsoft.genderestimation.ASGE_FSDKEngine;
 import com.arcsoft.genderestimation.ASGE_FSDKError;
 
-import com.arcsoft.genderestimation.ASGE_FSDKGender;
 import com.arcsoft.genderestimation.ASGE_FSDKVersion;
 
 import com.camera.simplewebcam.MyAppLaction;
@@ -49,7 +48,6 @@ import com.camera.simplewebcam.beans.BaoCunBean;
 import com.camera.simplewebcam.beans.BaoCunBeanDao;
 import com.camera.simplewebcam.beans.FaceDB;
 import com.camera.simplewebcam.beans.ImagesAdapter;
-import com.camera.simplewebcam.beans.MenBean;
 import com.camera.simplewebcam.beans.Photos;
 import com.camera.simplewebcam.beans.ShiBieBean;
 import com.camera.simplewebcam.beans.UserInfoBena;
@@ -119,7 +117,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 	List<AFT_FSDKFace> result = new ArrayList<>();
 	//List<AFT_FSDKFace> result2 = new ArrayList<>();
 	//List<ASAE_FSDKAge> ages = new ArrayList<>();
-	List<ASGE_FSDKGender> genders = new ArrayList<>();
+	//List<ASGE_FSDKGender> genders = new ArrayList<>();
 	private BaoCunBeanDao baoCunBeanDao=MyAppLaction.context.getDaoSession().getBaoCunBeanDao();
 	private int dw,dh;
 //	private OkHttpClient okHttpClient=null;
@@ -137,29 +135,18 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 	//private static Vector<Call> callsList=new Vector<>();
 	private ImageView zhengjianzhao;
 	private static boolean isA=true;
-	//private static int  faceSize=1;
+	private static boolean  face1=false;
 	private ImagesAdapter adapter;
 	//private ShowAdapter showAdapter;
-	private static boolean isGuanBi=false;
+//	private static boolean isGuanBi=false;
 	private static Vector<Bitmap> bitmapList=new Vector<>();
 
 	private final int TIMEOUT=1000*30;
-	private String screen_token=null;
+	//private String screen_token=null;
 	private BaoCunBean baoCunBean=null;
 	private TextView tishi;
 	private UserInfoBenaDao userInfoBenaDao=MyAppLaction.context.getDaoSession().getUserInfoBenaDao();
 	private UserInfoBena userInfoBena=null;
-
-
-	public Handler handler=new Handler(new Handler.Callback() {
-
-		@Override
-		public boolean handleMessage(final Message msg) {
-
-
-			return false;
-		}
-	});
 
 
 
@@ -298,16 +285,16 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 		super.onCreate(savedInstanceState);
 		String paths=getIntent().getStringExtra("shengfenzhengPath");
 		maxCount=1;
-		 baoCunBean=baoCunBeanDao.load(123456L);
-
+		 baoCunBean=baoCunBeanDao.load(12345678L);
 		userInfoBena=userInfoBenaDao.load(123456L);
+
 
 		mCameraID = getIntent().getIntExtra("Camera", 0) == 0 ? Camera.CameraInfo.CAMERA_FACING_BACK : Camera.CameraInfo.CAMERA_FACING_FRONT;
 		mCameraRotate = getIntent().getIntExtra("Camera", 0) == 0 ? 90 : 270;
 		mCameraMirror = getIntent().getIntExtra("Camera", 0) != 0;
 
-		Intent intent=new Intent("shoudongshuaxin");
-		getApplication().sendBroadcast(intent);
+//		Intent intent=new Intent("shoudongshuaxin");
+//		getApplication().sendBroadcast(intent);
 //		try {
 //			maxBasket.put("aaaa");
 //			maxBasket.put("aaaa");
@@ -331,6 +318,11 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 		dh = Utils.getDisplaySize(DetecterActivity.this).y;
 
 		setContentView(R.layout.activity_jieping);
+		tishi= (TextView) findViewById(R.id.tishi);
+		if (baoCunBean!=null){
+			face1=false;
+			link_P1(paths);
+		}
 		mGLSurfaceView = (CameraGLSurfaceView) findViewById(R.id.glsurfaceView);
 		mGLSurfaceView.setOnTouchListener(this);
 		mSurfaceView = (CameraSurfaceView) findViewById(R.id.surfaceView);
@@ -343,7 +335,8 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 		recyclerView.setLayoutManager(linearLayoutManager);
 		recyclerView.setAdapter(adapter);
 
-		tishi= (TextView) findViewById(R.id.tishi);
+
+
 		zhengjianzhao= (ImageView) findViewById(R.id.zhengjianzhao);
 		zhengjianzhao.setImageBitmap(BitmapFactory.decodeFile(paths));
 
@@ -369,9 +362,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 		error1 = mGenderEngine.ASGE_FSDK_GetVersion(mGenderVersion);
 		Log.d(TAG, "ASGE_FSDK_GetVersion:" + mGenderVersion.toString() + "," + error1.getCode());
 
-		if (baoCunBean!=null){
-			link_P1(paths);
-		}
+
 
 //		RelativeLayout.LayoutParams  params1= (RelativeLayout.LayoutParams) recyclerView2.getLayoutParams();
 //		params1.height=dh*2/3;
@@ -616,15 +607,15 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 //			Log.d(TAG, "Face:" + face.toString());
 //		}
 		AFT_FSDKError err = engine.AFT_FSDK_FaceFeatureDetect(data, width, height, AFT_FSDKEngine.CP_PAF_NV21, result);
-
-		if (isA) {
-			isA=false;
-			//final int size=result.size();
-			if (!result.isEmpty()) {
-					if (bitmapList.size()>0){
-						bitmapList.clear();
-						adapter.notifyDataSetChanged();
-					}
+		if (face1){
+			if (isA) {
+				isA=false;
+				//final int size=result.size();
+				if (!result.isEmpty()) {
+						if (bitmapList.size()>0){
+							bitmapList.clear();
+							adapter.notifyDataSetChanged();
+						}
 
 					for (AFT_FSDKFace fsdkFace : result){
 						YuvImage yuv = new YuvImage(data, ImageFormat.NV21, width, height, null);
@@ -675,6 +666,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 
 
 
+		}
 		}
 
 		//copy rects
@@ -727,7 +719,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 				.build();
 
          /* 第一个要上传的file */
-		File file1 = new File(filename1);
+		final File file1 = new File(filename1);
 		RequestBody fileBody1 = RequestBody.create(MediaType.parse("application/octet-stream") , file1);
 		final String file1Name = System.currentTimeMillis()+"testFile1.jpg";
 
@@ -783,6 +775,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 					Gson gson=new Gson();
 					Photos zhaoPianBean=gson.fromJson(jsonObject,Photos.class);
 					userInfoBena.setCardPhoto(zhaoPianBean.getExDesc());
+					face1=true;
 					userInfoBenaDao.update(userInfoBena);
 
 				}catch (Exception e){

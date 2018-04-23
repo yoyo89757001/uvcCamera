@@ -7,28 +7,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.anupcowkur.reservoir.Reservoir;
 
-import com.anupcowkur.reservoir.ReservoirPutCallback;
 import com.camera.simplewebcam.MyAppLaction;
 import com.camera.simplewebcam.R;
 import com.camera.simplewebcam.beans.BaoCunBean;
 import com.camera.simplewebcam.beans.BaoCunBeanDao;
-import com.camera.simplewebcam.beans.JiuDianBean;
 import com.camera.simplewebcam.dialog.XiuGaiJiuDianDialog;
 import com.camera.simplewebcam.dialog.XiuGaiXinXiDialog;
 
 import com.sdsmdg.tastytoast.TastyToast;
 
-import java.lang.reflect.Type;
 
 public class SheZhiActivity extends Activity {
     private Button ipDiZHI,gengxin,chaxun,zhuji2,jiudian;
     private TextView title;
     private ImageView famhui;
     private String ip=null;
-    private String zhuji=null;
-    private JiuDianBean jiuDianBean=null;
     private BaoCunBeanDao baoCunBeanDao= MyAppLaction.context.getDaoSession().getBaoCunBeanDao();
     private BaoCunBean baoCunBean=null;
 
@@ -36,12 +30,12 @@ public class SheZhiActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baoCunBean=baoCunBeanDao.load(123456L);
+        baoCunBean=baoCunBeanDao.load(12345678L);
         if (baoCunBean==null){
             baoCunBean=new BaoCunBean();
-            baoCunBean.setId(123456L);
+            baoCunBean.setId(12345678L);
             baoCunBean.setZhujiDiZhi("http://14.18.242.76:8092");
-
+            baoCunBeanDao.insert(baoCunBean);
         }
         setContentView(R.layout.activity_she_zhi);
 
@@ -94,19 +88,7 @@ public class SheZhiActivity extends Activity {
                     @Override
                     public void onClick(View v) {
 
-                                Reservoir.putAsync("ipipip",dialog.getContents(), new ReservoirPutCallback() {
-                                    @Override
-                                    public void onSuccess() {
-                                        TastyToast.makeText(SheZhiActivity.this,"保存成功",TastyToast.LENGTH_LONG,TastyToast.INFO).show();
-                                        dialog.dismiss();
-                                    }
 
-                                    @Override
-                                    public void onFailure(Exception e) {
-                                        TastyToast.makeText(SheZhiActivity.this,"保存失败",TastyToast.LENGTH_LONG,TastyToast.INFO).show();
-                                        dialog.dismiss();
-                                    }
-                                });
 
                             }
 

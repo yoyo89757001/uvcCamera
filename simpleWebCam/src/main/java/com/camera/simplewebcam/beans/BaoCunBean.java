@@ -36,11 +36,11 @@ public class BaoCunBean {
     private String shiPingWeiZhi;
     @Generated(hash = 1854052627)
     public BaoCunBean(@NotNull Long id, String shipingIP, String zhujiDiZhi,
-                      int moban, String tuisongDiZhi, String gonggao,
-                      boolean isShowMoshengren, boolean isShowShiPingLiu, boolean isHengOrShu,
-                      int yusu, int yudiao, int boyingren, String zhanghuId, String wenzi,
-                      int size, String touxiangzhuji, String houtaiDiZhi, String huiyiId,
-                      String wenzi1, int size1, String guanggaojiMing, String shiPingWeiZhi) {
+            int moban, String tuisongDiZhi, String gonggao,
+            boolean isShowMoshengren, boolean isShowShiPingLiu, boolean isHengOrShu,
+            int yusu, int yudiao, int boyingren, String zhanghuId, String wenzi,
+            int size, String touxiangzhuji, String houtaiDiZhi, String huiyiId,
+            String wenzi1, int size1, String guanggaojiMing, String shiPingWeiZhi) {
         this.id = id;
         this.shipingIP = shipingIP;
         this.zhujiDiZhi = zhujiDiZhi;
@@ -199,5 +199,6 @@ public class BaoCunBean {
     public void setShiPingWeiZhi(String shiPingWeiZhi) {
         this.shiPingWeiZhi = shiPingWeiZhi;
     }
+   
 
 }
