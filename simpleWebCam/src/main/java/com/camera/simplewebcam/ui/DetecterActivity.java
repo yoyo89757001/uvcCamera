@@ -107,7 +107,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 	private Camera mCamera;
 
 	private static int count=1;
-	private static int maxCount=1;
+	private static int maxCount=0;
 	AFT_FSDKVersion version = new AFT_FSDKVersion();
 	AFT_FSDKEngine engine = new AFT_FSDKEngine();
 	ASAE_FSDKVersion mAgeVersion = new ASAE_FSDKVersion();
@@ -284,7 +284,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		String paths=getIntent().getStringExtra("shengfenzhengPath");
-		maxCount=1;
+		maxCount=0;
 		 baoCunBean=baoCunBeanDao.load(12345678L);
 		userInfoBena=userInfoBenaDao.load(123456L);
 
@@ -450,7 +450,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 	@Override
 	protected void onStop() {
 		isA=true;
-		maxCount=1;
+		maxCount=0;
 		super.onStop();
 
 	}
@@ -751,6 +751,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 		call.enqueue(new Callback() {
 			@Override
 			public void onFailure(Call call, IOException e) {
+				Log.d("AllConnects", "请求识别失败P1"+e.getMessage());
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
@@ -758,7 +759,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 						tishi.setText("上传图片出错,请返回后重试！");
 					}
 				});
-				// Log.d("AllConnects", "请求识别失败"+e.getMessage());
+				//
 			}
 
 			@Override
@@ -813,7 +814,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
     /* 第二个要上传的文件,*/
 
 		RequestBody fileBody2 = RequestBody.create(MediaType.parse("application/octet-stream") , file);
-		String file2Name =System.currentTimeMillis()+"testFile2.jpg";
+	//	String file2Name =System.currentTimeMillis()+"testFile2.jpg";
 
 
 //    /* form的分割线,自己定义 */
@@ -824,7 +825,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 				//  .addFormDataPart("image_1" , file1Name , fileBody1)
                   /* 上传一个普通的String参数 */
 				//  .addFormDataPart("subject_id" , subject_id+"")
-				.addFormDataPart("voiceFile" , file2Name , fileBody2)
+				.addFormDataPart("voiceFile" , file.getName() , fileBody2)
 				.build();
 		Request.Builder requestBuilder = new Request.Builder()
 				// .header("Content-Type", "application/json")
@@ -839,7 +840,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 		call.enqueue(new Callback() {
 			@Override
 			public void onFailure(Call call, IOException e) {
-				// Log.d("AllConnects", "请求识别失败"+e.getMessage());
+				 Log.d("AllConnects", "请求识别失败P2"+e.getMessage());
 				Log.d("DetecterActivity", "file.delete()2:" + file.delete());
 				runOnUiThread(new Runnable() {
 					@Override
@@ -1212,9 +1213,9 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 			bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
 			//long length = baos.toByteArray().length;
 		}
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
-		Date date = new Date(System.currentTimeMillis());
-		String filename = format.format(date);
+//		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+//		Date date = new Date(System.currentTimeMillis());
+		String filename = System.currentTimeMillis()+"";
 		File file = new File(Environment.getExternalStorageDirectory(),filename+".png");
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
