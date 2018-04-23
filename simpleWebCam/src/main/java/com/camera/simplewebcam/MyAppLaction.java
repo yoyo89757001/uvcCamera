@@ -21,7 +21,7 @@ import com.tzutalin.dlib.FaceDet;
 public class MyAppLaction extends MultiDexApplication {
    // private File mCascadeFile;
     public static FaceDet mFaceDet;
-    public static String sip=null;
+   // public static String sip=null;
     public static JiuDianBean jiuDianBean=null;
     FaceDB mFaceDB;
    // Uri mImage;

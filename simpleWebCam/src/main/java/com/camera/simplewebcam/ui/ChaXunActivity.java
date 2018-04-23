@@ -1,5 +1,6 @@
 package com.camera.simplewebcam.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,27 +14,27 @@ import com.camera.simplewebcam.MyAppLaction;
 import com.camera.simplewebcam.R;
 import com.camera.simplewebcam.beans.BaoCunBean;
 import com.camera.simplewebcam.beans.BaoCunBeanDao;
-import com.camera.simplewebcam.beans.JiuDianBean;
-import java.io.UnsupportedEncodingException;
 
-import java.net.URLEncoder;
+
+
 
 public class ChaXunActivity extends Activity {
     private WebView webView;
     private TextView title;
     private ImageView famhui;
-    private JiuDianBean jiuDianBean=null;
+   // private JiuDianBean jiuDianBean=null;
     private BaoCunBeanDao baoCunBeanDao=MyAppLaction.context.getDaoSession().getBaoCunBeanDao();
     private BaoCunBean baoCunBean=null;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baoCunBean=baoCunBeanDao.load(123456L);
+        baoCunBean=baoCunBeanDao.load(12345678L);
         setContentView(R.layout.activity_cha_xun);
         webView= (WebView) findViewById(R.id.webwiew);
 
-        jiuDianBean= MyAppLaction.jiuDianBean;
+      //  jiuDianBean= MyAppLaction.jiuDianBean;
         title= (TextView) findViewById(R.id.title);
         title.setText("比对记录");
         famhui= (ImageView) findViewById(R.id.leftim);
@@ -63,7 +64,7 @@ public class ChaXunActivity extends Activity {
         webSetting.setDatabasePath(this.getDir("databases", 0).getPath());
         webSetting.setGeolocationDatabasePath(this.getDir("geolocation", 0)
                 .getPath());
-        // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
+       //  webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
         webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
 
         webView.setWebViewClient(new WebViewClient() {
@@ -83,6 +84,7 @@ public class ChaXunActivity extends Activity {
         if (baoCunBean!=null){
             if (baoCunBean.getZhujiDiZhi()!=null && baoCunBean.getHuiyiId()!=null)
             {
+                Log.d("ChaXunActivity", baoCunBean.getZhujiDiZhi() + "/police/ipad.html?accountId=" + baoCunBean.getHuiyiId());
 //                String str =baoCunBean.getGuanggaojiMing(); //默认环境，已是UTF-8编码
 //                String strGBK = null;
 //                try {
@@ -90,8 +92,6 @@ public class ChaXunActivity extends Activity {
 //                } catch (UnsupportedEncodingException e) {
 //                    e.printStackTrace();
 //                }
-             Log.d("ChaXunActivity", baoCunBean.getZhujiDiZhi() + "/police/ipad.html?accountId=" + baoCunBean.getHuiyiId());
-
                 webView.loadUrl(baoCunBean.getZhujiDiZhi()+"/police/ipad.html?accountId="+baoCunBean.getHuiyiId());
             }
 

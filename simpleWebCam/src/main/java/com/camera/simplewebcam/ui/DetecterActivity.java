@@ -588,7 +588,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 		relativeLayout.height=dh*2/3;
 		mGLSurfaceView.setLayoutParams(relativeLayout);
 		mGLSurfaceView.invalidate();
-		Log.d("fffffffff", "fffffffffffff");
+		//Log.d("fffffffff", "fffffffffffff");
 	}
 
 	@Override

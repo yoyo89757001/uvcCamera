@@ -12,17 +12,21 @@ import com.camera.simplewebcam.MyAppLaction;
 import com.camera.simplewebcam.R;
 import com.camera.simplewebcam.beans.BaoCunBean;
 import com.camera.simplewebcam.beans.BaoCunBeanDao;
+import com.camera.simplewebcam.beans.JiuDianBean;
 import com.camera.simplewebcam.dialog.XiuGaiJiuDianDialog;
 import com.camera.simplewebcam.dialog.XiuGaiXinXiDialog;
 
 import com.sdsmdg.tastytoast.TastyToast;
 
+import java.lang.reflect.Type;
 
 public class SheZhiActivity extends Activity {
     private Button ipDiZHI,gengxin,chaxun,zhuji2,jiudian;
     private TextView title;
     private ImageView famhui;
     private String ip=null;
+    private String zhuji=null;
+    private JiuDianBean jiuDianBean=null;
     private BaoCunBeanDao baoCunBeanDao= MyAppLaction.context.getDaoSession().getBaoCunBeanDao();
     private BaoCunBean baoCunBean=null;
 
@@ -36,6 +40,7 @@ public class SheZhiActivity extends Activity {
             baoCunBean.setId(12345678L);
             baoCunBean.setZhujiDiZhi("http://14.18.242.76:8092");
             baoCunBeanDao.insert(baoCunBean);
+
         }
         setContentView(R.layout.activity_she_zhi);
 
@@ -83,27 +88,8 @@ public class SheZhiActivity extends Activity {
         ipDiZHI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final XiuGaiXinXiDialog dialog=new XiuGaiXinXiDialog(SheZhiActivity.this);
-                dialog.setOnQueRenListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
 
-
-                            }
-
-
-                });
-                dialog.setQuXiaoListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                if (ip!=null){
-                    dialog.setContents("设置IP摄像头地址",ip);
-                }
-                dialog.show();
             }
         });
         gengxin.setOnClickListener(new View.OnClickListener() {
