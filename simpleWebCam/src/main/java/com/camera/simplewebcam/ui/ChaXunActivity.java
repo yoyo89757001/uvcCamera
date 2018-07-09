@@ -25,6 +25,8 @@ public class ChaXunActivity extends Activity {
    // private JiuDianBean jiuDianBean=null;
     private BaoCunBeanDao baoCunBeanDao=MyAppLaction.context.getDaoSession().getBaoCunBeanDao();
     private BaoCunBean baoCunBean=null;
+    private int type=0;
+
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -33,7 +35,7 @@ public class ChaXunActivity extends Activity {
         baoCunBean=baoCunBeanDao.load(12345678L);
         setContentView(R.layout.activity_cha_xun);
         webView= (WebView) findViewById(R.id.webwiew);
-
+        type=getIntent().getIntExtra("type",0);
       //  jiuDianBean= MyAppLaction.jiuDianBean;
         title= (TextView) findViewById(R.id.title);
         title.setText("比对记录");
@@ -84,15 +86,14 @@ public class ChaXunActivity extends Activity {
         if (baoCunBean!=null){
             if (baoCunBean.getZhujiDiZhi()!=null && baoCunBean.getHuiyiId()!=null)
             {
-                Log.d("ChaXunActivity", baoCunBean.getZhujiDiZhi() + "/police/ipad.html?accountId=" + baoCunBean.getHuiyiId());
-//                String str =baoCunBean.getGuanggaojiMing(); //默认环境，已是UTF-8编码
-//                String strGBK = null;
-//                try {
-//                    strGBK = URLEncoder.encode(str,"UTF-8");
-//                } catch (UnsupportedEncodingException e) {
-//                    e.printStackTrace();
-//                }
-                webView.loadUrl(baoCunBean.getZhujiDiZhi()+"/police/ipad.html?accountId="+baoCunBean.getHuiyiId());
+
+                if (type==0){
+                    webView.loadUrl(baoCunBean.getZhujiDiZhi()+"/police/ipad.html?accountId="+baoCunBean.getHuiyiId());
+                //    Log.d("ChaXunActivity", baoCunBean.getZhuji() + "/police/ipad.html?accountId=" + baoCunBean.getJiudianID());
+                }else {
+                    webView.loadUrl(baoCunBean.getZhujiDiZhi()+"/police/tuifang.html?accountId="+baoCunBean.getHuiyiId());
+                 //   Log.d("ChaXunActivity", baoCunBean.getZhuji() + "/police/tuifang.html?accountId=" + baoCunBean.getJiudianID());
+                }
             }
 
         }
