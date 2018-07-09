@@ -25,15 +25,12 @@ import com.camera.simplewebcam.R;
 import com.camera.simplewebcam.beans.Photos;
 import com.camera.simplewebcam.beans.ShiBieBean;
 import com.camera.simplewebcam.beans.UserInfoBena;
-import com.camera.simplewebcam.utils.FileUtil;
+
 import com.camera.simplewebcam.utils.GsonUtil;
-import com.camera.simplewebcam.utils.LibVLCUtil;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.videolan.libvlc.IVLCVout;
-import org.videolan.libvlc.LibVLC;
-import org.videolan.libvlc.Media;
-import org.videolan.libvlc.MediaPlayer;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,11 +50,11 @@ import okhttp3.ResponseBody;
 public class VlcActivity extends Activity {
 
     public static final String HOST="http://174p2704z3.51mypc.cn:33158";
-    private MediaPlayer mediaPlayer=null;
-    private IVLCVout vlcVout=null;
-    private IVLCVout.Callback callback;
-    private LibVLC libvlc;
-    private Media media;
+//    private MediaPlayer mediaPlayer=null;
+//    private IVLCVout vlcVout=null;
+//    private IVLCVout.Callback callback;
+//    private LibVLC libvlc;
+//    private Media media;
     private static boolean isTrue=true;
     private static boolean isTrue2=true;
     private Bitmap bitmapBig=null;
@@ -109,65 +106,65 @@ public class VlcActivity extends Activity {
         Log.d("VlcActivity", uri.toString());
         initHandler();
 
-        libvlc= LibVLCUtil.getLibVLC(VlcActivity.this);
-        mediaPlayer=new MediaPlayer(libvlc);
-        vlcVout = mediaPlayer.getVLCVout();
-        callback=new IVLCVout.Callback() {
-            @Override
-            public void onNewLayout(IVLCVout vlcVout, int width, int height, int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
-
-            }
-
-            @Override
-            public void onSurfacesCreated(IVLCVout vlcVout) {
-                if (mediaPlayer != null) {
-
-                    media = new Media(libvlc, uri);
-                    mediaPlayer.setMedia(media);
-
-                    mediaPlayer.play();
-                    videoView.setKeepScreenOn(true);
-                }
-
-
-            }
-
-            @Override
-            public void onSurfacesDestroyed(IVLCVout vlcVout) {
-
-            }
-
-            @Override
-            public void onHardwareAccelerationError(IVLCVout vlcVout) {
-
-            }
-        };
-        videoView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
-            @Override
-            public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-                vlcVout.attachViews();
-
-                startThread();
-
-            }
-
-            @Override
-            public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-
-            }
-
-            @Override
-            public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-                return false;
-            }
-
-            @Override
-            public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
-            }
-        });
-        vlcVout.addCallback(callback);
-        vlcVout.setVideoView(videoView);
+//        libvlc= LibVLCUtil.getLibVLC(VlcActivity.this);
+//        mediaPlayer=new MediaPlayer(libvlc);
+//        vlcVout = mediaPlayer.getVLCVout();
+//        callback=new IVLCVout.Callback() {
+//            @Override
+//            public void onNewLayout(IVLCVout vlcVout, int width, int height, int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
+//
+//            }
+//
+//            @Override
+//            public void onSurfacesCreated(IVLCVout vlcVout) {
+//                if (mediaPlayer != null) {
+//
+//                    media = new Media(libvlc, uri);
+//                    mediaPlayer.setMedia(media);
+//
+//                    mediaPlayer.play();
+//                    videoView.setKeepScreenOn(true);
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onSurfacesDestroyed(IVLCVout vlcVout) {
+//
+//            }
+//
+//            @Override
+//            public void onHardwareAccelerationError(IVLCVout vlcVout) {
+//
+//            }
+//        };
+//        videoView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+//            @Override
+//            public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+//                vlcVout.attachViews();
+//
+//                startThread();
+//
+//            }
+//
+//            @Override
+//            public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+//
+//            }
+//
+//            @Override
+//            public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+//
+//            }
+//        });
+//        vlcVout.addCallback(callback);
+//        vlcVout.setVideoView(videoView);
 
 
     }

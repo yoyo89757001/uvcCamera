@@ -8,7 +8,7 @@ import com.camera.simplewebcam.beans.DaoMaster;
 import com.camera.simplewebcam.beans.DaoSession;
 import com.camera.simplewebcam.beans.FaceDB;
 import com.camera.simplewebcam.beans.JiuDianBean;
-import com.tencent.bugly.Bugly;
+
 import com.tzutalin.dlib.Constants;
 import com.tzutalin.dlib.FaceDet;
 
@@ -59,7 +59,7 @@ public class MyAppLaction extends MultiDexApplication {
 
         try {
             setDatabase();
-            Bugly.init(getApplicationContext(), "3ac2e45cee", false);
+        //    Bugly.init(getApplicationContext(), "3ac2e45cee", false);
 
 //            Reservoir.init(this, 900*1024); //in bytes 1M
 

@@ -21,7 +21,7 @@ import com.sdsmdg.tastytoast.TastyToast;
 import java.lang.reflect.Type;
 
 public class SheZhiActivity extends Activity {
-    private Button ipDiZHI,gengxin,chaxun,zhuji2,jiudian;
+    private Button ipDiZHI,gengxin,chaxun,zhuji2,jiudian,chaxun2;
     private TextView title;
     private ImageView famhui;
     private String ip=null;
@@ -105,6 +105,15 @@ public class SheZhiActivity extends Activity {
             public void onClick(View v) {
                 startActivity(new Intent(SheZhiActivity.this,ChaXunActivity.class));
 
+            }
+        });
+
+        chaxun2= (Button) findViewById(R.id.chaxun2);
+        chaxun2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(SheZhiActivity.this,ChaXunHuZhaoActivity.class));
             }
         });
 

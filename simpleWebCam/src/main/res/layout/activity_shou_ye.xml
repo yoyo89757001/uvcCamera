@@ -29,7 +29,7 @@
             <TextView
                 android:text="人证合一智能识别系统"
                 android:layout_marginLeft="6dp"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textColor="@color/blake"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -37,7 +37,7 @@
             <TextView
                 android:text="INTELLIGENT IDENTIFICAION SYSTEM"
                 android:layout_marginLeft="6dp"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textColor="@color/blake"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -46,28 +46,89 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/beijing"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:background="@drawable/beijing">
 
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:id="@+id/dengji"
-            android:layout_marginRight="40dp"
-            android:src="@drawable/anniu" />
+        <LinearLayout
+            android:id="@+id/f4"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="140dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="150dp"
+            <TextView
+                android:id="@+id/dengji2"
+                android:layout_width="170dp"
+                android:layout_height="60dp"
+                android:background="@drawable/jiaohu7"
+                android:gravity="center"
+                android:text="身份证住宿登记"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dengji3"
+                android:layout_width="170dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/jiaohu7"
+                android:gravity="center"
+                android:text="护照住宿登记"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dengji4"
+                android:layout_width="170dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/jiaohu7"
+                android:gravity="center"
+                android:text="退房登记"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="86dp"
             android:id="@+id/shezhi"
-            android:layout_height="150dp"
-            android:layout_marginLeft="40dp"
-            android:src="@drawable/anniu2" />
+            android:layout_height="86dp"/>
 
-    </LinearLayout>
+
+        <TextView
+            android:textColor="@color/write"
+            android:textSize="20sp"
+            android:text="警讯公告"
+            android:layout_above="@+id/tishi_ll"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/tishi_ll"
+            android:background="@drawable/zidonghuoqu3"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:layout_height="200dp">
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
 
 
 </LinearLayout>
