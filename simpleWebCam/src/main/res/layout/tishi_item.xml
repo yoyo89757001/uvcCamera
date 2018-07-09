@@ -7,12 +7,15 @@
 
     <ImageView
         android:id="@+id/touxiang"
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
+        android:layout_marginLeft="10dp"
+        android:scaleType="fitXY"
+        android:layout_width="130dp"
+        android:layout_height="180dp" />
 
     <com.camera.simplewebcam.view.VerticalScrolledListview
         android:id="@+id/tishi"
         android:layout_marginRight="2dp"
+        android:layout_marginLeft="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/write"/>

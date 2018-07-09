@@ -944,11 +944,11 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 				});
 					try {
 						basket.take();
-						if (basket.size()==0 && maxCount<=6)
+						if (basket.size()==0 && maxCount<=3)
 							isA=true;
 					} catch (InterruptedException e1) {
 						basket.clear();
-						if ( maxCount<=6)
+						if ( maxCount<=3)
 						isA=true;
 					}
 				Log.d("AllConnects", "请求识别失败"+e.getMessage());
@@ -992,7 +992,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 						try {
 							basket.take();
 							if (basket.size()==0){
-								if (maxCount<=6){
+								if (maxCount<=3){
 									isA=true;
 								}else {
 									sendBroadcast(new Intent("guanbi").putExtra("biduijieguo",false).putExtra("xiangsidu",(zhaoPianBean.getScore()+"").substring(0,5))
@@ -1003,7 +1003,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 
 						} catch (InterruptedException e1) {
 							basket.clear();
-							if (maxCount<=6)
+							if (maxCount<=3)
 								isA=true;
 							else {
 								sendBroadcast(new Intent("guanbi").putExtra("biduijieguo",false).putExtra("xiangsidu",(zhaoPianBean.getScore()+"").substring(0,5))
@@ -1021,7 +1021,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 					try {
 						basket.take();
 						if (basket.size()==0){
-							if (maxCount<=6){
+							if (maxCount<=3){
 								isA=true;
 							}else {
 								sendBroadcast(new Intent("guanbi").putExtra("biduijieguo",false).putExtra("xiangsidu","43.21")
@@ -1032,7 +1032,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 
 					} catch (InterruptedException e1) {
 						basket.clear();
-						if (maxCount<=6)
+						if (maxCount<=3)
 							isA=true;
 						else {
 							sendBroadcast(new Intent("guanbi").putExtra("biduijieguo",false).putExtra("xiangsidu","43.21")

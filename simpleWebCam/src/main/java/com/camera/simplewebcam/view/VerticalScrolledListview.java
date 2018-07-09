@@ -61,7 +61,7 @@ public class VerticalScrolledListview extends LinearLayout {
                 textView.setText(data.get(i));
                 textView.setGravity(Gravity.LEFT);
                 textView.setTextColor(Color.WHITE);
-                textView.setTextSize(16);
+                textView.setTextSize(20);
 
                 this.addView(textView);
                 textView.setClickable(true);

@@ -27,7 +27,7 @@
             android:id="@+id/linearLayout2">
 
             <TextView
-                android:text="人证合一智能识别系统"
+                android:text="人证比对智能识别系统"
                 android:layout_marginLeft="6dp"
                 android:textSize="18sp"
                 android:textColor="@color/blake"
@@ -61,37 +61,37 @@
 
             <TextView
                 android:id="@+id/dengji2"
-                android:layout_width="170dp"
-                android:layout_height="60dp"
+                android:layout_width="200dp"
+                android:layout_height="70dp"
                 android:background="@drawable/jiaohu7"
                 android:gravity="center"
                 android:text="身份证住宿登记"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/dengji3"
-                android:layout_width="170dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="30dp"
+                android:layout_width="200dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/jiaohu7"
                 android:gravity="center"
                 android:text="护照住宿登记"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/dengji4"
-                android:layout_width="170dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="30dp"
+                android:layout_width="200dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/jiaohu7"
                 android:gravity="center"
                 android:text="退房登记"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
 
@@ -104,14 +104,7 @@
             android:layout_height="86dp"/>
 
 
-        <TextView
-            android:textColor="@color/write"
-            android:textSize="20sp"
-            android:text="警讯公告"
-            android:layout_above="@+id/tishi_ll"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,12 +113,27 @@
             android:layout_alignParentBottom="true"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:layout_margin="10dp"
-            android:layout_height="200dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="-4dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="260dp">
 
 
         </LinearLayout>
 
+        <TextView
+            android:textColor="@color/write"
+            android:textSize="26sp"
+            android:text="警讯公告"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/zidonghuoqu3"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/tishi_ll"
+            android:layout_marginTop="-130dp"
+            android:layout_width="160dp"
+            android:layout_height="60dp" />
 
     </RelativeLayout>
 
